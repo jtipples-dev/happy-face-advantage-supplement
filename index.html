@@ -51,10 +51,97 @@ ul.task-list li input[type="checkbox"] {
 
 </head>
 
-<body class="fullcontent quarto-light">
+<body class="quarto-light">
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#racing-diffusion-models" id="toc-racing-diffusion-models" class="nav-link" data-scroll-target="#racing-diffusion-models">Racing Diffusion Models</a>
+  <ul class="collapse">
+  <li><a href="#experiment-1" id="toc-experiment-1" class="nav-link" data-scroll-target="#experiment-1">Experiment 1</a>
+  <ul class="collapse">
+  <li><a href="#fixed-effect-coefficients" id="toc-fixed-effect-coefficients" class="nav-link" data-scroll-target="#fixed-effect-coefficients">Fixed Effect Coefficients</a></li>
+  <li><a href="#trace-plots" id="toc-trace-plots" class="nav-link" data-scroll-target="#trace-plots">Trace Plots</a></li>
+  <li><a href="#posterior-densities" id="toc-posterior-densities" class="nav-link" data-scroll-target="#posterior-densities">Posterior Densities</a></li>
+  <li><a href="#overall-rt-distribution" id="toc-overall-rt-distribution" class="nav-link" data-scroll-target="#overall-rt-distribution">Overall RT Distribution</a></li>
+  <li><a href="#rt-distribution-by-choice-accuracy" id="toc-rt-distribution-by-choice-accuracy" class="nav-link" data-scroll-target="#rt-distribution-by-choice-accuracy">RT Distribution by Choice Accuracy</a></li>
+  <li><a href="#rt-distribution-by-expression" id="toc-rt-distribution-by-expression" class="nav-link" data-scroll-target="#rt-distribution-by-expression">RT Distribution by Expression</a></li>
+  <li><a href="#summary-statistics" id="toc-summary-statistics" class="nav-link" data-scroll-target="#summary-statistics">Summary Statistics</a></li>
+  <li><a href="#accuracy-ppc" id="toc-accuracy-ppc" class="nav-link" data-scroll-target="#accuracy-ppc">Accuracy PPC</a></li>
+  <li><a href="#random-effect-sds" id="toc-random-effect-sds" class="nav-link" data-scroll-target="#random-effect-sds">Random Effect SDs</a></li>
+  </ul></li>
+  <li><a href="#experiment-2" id="toc-experiment-2" class="nav-link" data-scroll-target="#experiment-2">Experiment 2</a>
+  <ul class="collapse">
+  <li><a href="#fixed-effect-coefficients-1" id="toc-fixed-effect-coefficients-1" class="nav-link" data-scroll-target="#fixed-effect-coefficients-1">Fixed effect Coefficients</a></li>
+  <li><a href="#trace-plots-1" id="toc-trace-plots-1" class="nav-link" data-scroll-target="#trace-plots-1">Trace Plots</a></li>
+  <li><a href="#overall-rt-distribution-1" id="toc-overall-rt-distribution-1" class="nav-link" data-scroll-target="#overall-rt-distribution-1">Overall RT Distribution</a></li>
+  <li><a href="#rt-distribution-by-choice-accuracy-1" id="toc-rt-distribution-by-choice-accuracy-1" class="nav-link" data-scroll-target="#rt-distribution-by-choice-accuracy-1">RT Distribution by Choice Accuracy</a></li>
+  <li><a href="#rt-distribution-by-expression-1" id="toc-rt-distribution-by-expression-1" class="nav-link" data-scroll-target="#rt-distribution-by-expression-1">RT Distribution by Expression</a></li>
+  <li><a href="#summary-statistics-1" id="toc-summary-statistics-1" class="nav-link" data-scroll-target="#summary-statistics-1">Summary Statistics</a></li>
+  <li><a href="#accuracy-ppc-1" id="toc-accuracy-ppc-1" class="nav-link" data-scroll-target="#accuracy-ppc-1">Accuracy PPC</a></li>
+  <li><a href="#random-effect-sds-1" id="toc-random-effect-sds-1" class="nav-link" data-scroll-target="#random-effect-sds-1">Random Effect SDs</a></li>
+  </ul></li>
+  <li><a href="#experiment-3" id="toc-experiment-3" class="nav-link" data-scroll-target="#experiment-3">Experiment 3</a>
+  <ul class="collapse">
+  <li><a href="#fixed-effect-coefficients-2" id="toc-fixed-effect-coefficients-2" class="nav-link" data-scroll-target="#fixed-effect-coefficients-2">Fixed Effect Coefficients</a></li>
+  <li><a href="#trace-plots-2" id="toc-trace-plots-2" class="nav-link" data-scroll-target="#trace-plots-2">Trace Plots</a></li>
+  <li><a href="#overall-rt-distribution-2" id="toc-overall-rt-distribution-2" class="nav-link" data-scroll-target="#overall-rt-distribution-2">Overall RT Distribution</a></li>
+  <li><a href="#rt-distribution-by-choice-accuracy-2" id="toc-rt-distribution-by-choice-accuracy-2" class="nav-link" data-scroll-target="#rt-distribution-by-choice-accuracy-2">RT Distribution by Choice Accuracy</a></li>
+  <li><a href="#rt-distribution-by-expression-2" id="toc-rt-distribution-by-expression-2" class="nav-link" data-scroll-target="#rt-distribution-by-expression-2">RT Distribution by Expression</a></li>
+  <li><a href="#summary-statistics-2" id="toc-summary-statistics-2" class="nav-link" data-scroll-target="#summary-statistics-2">Summary Statistics</a></li>
+  <li><a href="#accuracy-ppc-2" id="toc-accuracy-ppc-2" class="nav-link" data-scroll-target="#accuracy-ppc-2">Accuracy PPC</a></li>
+  <li><a href="#random-effect-sds-2" id="toc-random-effect-sds-2" class="nav-link" data-scroll-target="#random-effect-sds-2">Random Effect SDs</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#ex-gaussian-models" id="toc-ex-gaussian-models" class="nav-link" data-scroll-target="#ex-gaussian-models">Ex-Gaussian Models</a>
+  <ul class="collapse">
+  <li><a href="#experiment-1-1" id="toc-experiment-1-1" class="nav-link" data-scroll-target="#experiment-1-1">Experiment 1</a>
+  <ul class="collapse">
+  <li><a href="#fixed-effect-coefficients-3" id="toc-fixed-effect-coefficients-3" class="nav-link" data-scroll-target="#fixed-effect-coefficients-3">Fixed effect Coefficients</a></li>
+  <li><a href="#quantile-comparison" id="toc-quantile-comparison" class="nav-link" data-scroll-target="#quantile-comparison">Quantile Comparison</a></li>
+  <li><a href="#q-q-plot" id="toc-q-q-plot" class="nav-link" data-scroll-target="#q-q-plot">Q-Q Plot</a></li>
+  <li><a href="#quantile-differences" id="toc-quantile-differences" class="nav-link" data-scroll-target="#quantile-differences">Quantile Differences</a></li>
+  <li><a href="#percent-error" id="toc-percent-error" class="nav-link" data-scroll-target="#percent-error">Percent Error</a></li>
+  <li><a href="#actual-vs.-predicted" id="toc-actual-vs.-predicted" class="nav-link" data-scroll-target="#actual-vs.-predicted">Actual vs.&nbsp;Predicted</a></li>
+  <li><a href="#density-comparison" id="toc-density-comparison" class="nav-link" data-scroll-target="#density-comparison">Density Comparison</a></li>
+  <li><a href="#conditional-quantiles" id="toc-conditional-quantiles" class="nav-link" data-scroll-target="#conditional-quantiles">Conditional Quantiles</a></li>
+  </ul></li>
+  <li><a href="#experiment-2-1" id="toc-experiment-2-1" class="nav-link" data-scroll-target="#experiment-2-1">Experiment 2</a>
+  <ul class="collapse">
+  <li><a href="#fixed-effect-coefficients-4" id="toc-fixed-effect-coefficients-4" class="nav-link" data-scroll-target="#fixed-effect-coefficients-4">Fixed effect Coefficients</a></li>
+  <li><a href="#quantile-comparison-1" id="toc-quantile-comparison-1" class="nav-link" data-scroll-target="#quantile-comparison-1">Quantile Comparison</a></li>
+  <li><a href="#q-q-plot-1" id="toc-q-q-plot-1" class="nav-link" data-scroll-target="#q-q-plot-1">Q-Q Plot</a></li>
+  <li><a href="#quantile-differences-1" id="toc-quantile-differences-1" class="nav-link" data-scroll-target="#quantile-differences-1">Quantile Differences</a></li>
+  <li><a href="#percent-error-1" id="toc-percent-error-1" class="nav-link" data-scroll-target="#percent-error-1">Percent Error</a></li>
+  <li><a href="#actual-vs.-predicted-1" id="toc-actual-vs.-predicted-1" class="nav-link" data-scroll-target="#actual-vs.-predicted-1">Actual vs.&nbsp;Predicted</a></li>
+  <li><a href="#density-comparison-1" id="toc-density-comparison-1" class="nav-link" data-scroll-target="#density-comparison-1">Density Comparison</a></li>
+  <li><a href="#conditional-quantiles-1" id="toc-conditional-quantiles-1" class="nav-link" data-scroll-target="#conditional-quantiles-1">Conditional Quantiles</a></li>
+  </ul></li>
+  <li><a href="#experiment-3-1" id="toc-experiment-3-1" class="nav-link" data-scroll-target="#experiment-3-1">Experiment 3</a>
+  <ul class="collapse">
+  <li><a href="#fixed-effect-coefficients-5" id="toc-fixed-effect-coefficients-5" class="nav-link" data-scroll-target="#fixed-effect-coefficients-5">Fixed effect Coefficients</a></li>
+  <li><a href="#quantile-comparison-2" id="toc-quantile-comparison-2" class="nav-link" data-scroll-target="#quantile-comparison-2">Quantile Comparison</a></li>
+  <li><a href="#q-q-plot-2" id="toc-q-q-plot-2" class="nav-link" data-scroll-target="#q-q-plot-2">Q-Q Plot</a></li>
+  <li><a href="#quantile-differences-2" id="toc-quantile-differences-2" class="nav-link" data-scroll-target="#quantile-differences-2">Quantile Differences</a></li>
+  <li><a href="#percent-error-2" id="toc-percent-error-2" class="nav-link" data-scroll-target="#percent-error-2">Percent Error</a></li>
+  <li><a href="#actual-vs.-predicted-2" id="toc-actual-vs.-predicted-2" class="nav-link" data-scroll-target="#actual-vs.-predicted-2">Actual vs.&nbsp;Predicted</a></li>
+  <li><a href="#density-comparison-2" id="toc-density-comparison-2" class="nav-link" data-scroll-target="#density-comparison-2">Density Comparison</a></li>
+  <li><a href="#conditional-quantiles-2" id="toc-conditional-quantiles-2" class="nav-link" data-scroll-target="#conditional-quantiles-2">Conditional Quantiles</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#summary-of-model-validation" id="toc-summary-of-model-validation" class="nav-link" data-scroll-target="#summary-of-model-validation">Summary of Model Validation</a>
+  <ul class="collapse">
+  <li><a href="#racing-diffusion-models-1" id="toc-racing-diffusion-models-1" class="nav-link" data-scroll-target="#racing-diffusion-models-1">Racing Diffusion Models</a></li>
+  <li><a href="#ex-gaussian-models-1" id="toc-ex-gaussian-models-1" class="nav-link" data-scroll-target="#ex-gaussian-models-1">Ex-Gaussian Models</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
