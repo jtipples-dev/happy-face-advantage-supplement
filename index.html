@@ -1,0 +1,4149 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Tipples, J.">
+<meta name="dcterms.date" content="2026-05-04">
+
+<title>Supplementary Materials: Model Validation and Posterior Predictive Checks</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="SOM_files/libs/clipboard/clipboard.min.js"></script>
+<script src="SOM_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="SOM_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="SOM_files/libs/quarto-html/popper.min.js"></script>
+<script src="SOM_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="SOM_files/libs/quarto-html/anchor.min.js"></script>
+<link href="SOM_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="SOM_files/libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="SOM_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="SOM_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="SOM_files/libs/bootstrap/bootstrap-efbb37e9afcc02144ebbc7afd12a776f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="SOM_files/libs/kePrint-0.0.1/kePrint.js"></script>
+
+<link href="SOM_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+<link href="SOM_files/libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet">
+
+<script src="SOM_files/libs/bsTable-3.3.7/bootstrapTable.js"></script>
+
+
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Supplementary Materials: Model Validation and Posterior Predictive Checks</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Tipples, J. </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">May 4, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="overview" class="level1">
+<h1>Overview</h1>
+<p>This supplement provides comprehensive model validation and posterior predictive checks for all primary analyses reported in the main text. Validation is reported separately for:</p>
+<ol type="1">
+<li><strong>Racing Diffusion Models (RDM)</strong> - Fitted using <code>brms</code> (Bürkner, 2017) with <code>cmdstanr</code> backend</li>
+<li><strong>Ex-Gaussian Models</strong> - Fitted using <code>gamlss</code> (Rigby &amp; Stasinopoulos, 2005)</li>
+</ol>
+<p>All checks are reported for each of the three experiments (Expt 1, Expt 2, Expt 3).</p>
+<hr>
+</section>
+<section id="racing-diffusion-models" class="level1">
+<h1>Racing Diffusion Models</h1>
+<p>The racing diffusion model (RDM) decomposes decision-making into four latent parameters: correct drift rate (μ), incorrect drift rate (κ), boundary separation (σ), and non-decision time (δ). Model convergence and fit were assessed using multiple diagnostics.</p>
+<section id="experiment-1" class="level2">
+<h2 class="anchored" data-anchor-id="experiment-1">Experiment 1</h2>
+<section id="fixed-effect-coefficients" class="level3">
+<h3 class="anchored" data-anchor-id="fixed-effect-coefficients">Fixed Effect Coefficients</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table class="lightable-classic caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Parameter (coefficients)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Median</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">CI-lower</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">CI-upper</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Bayesian 95% Credible</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd" data-grouplength="4">
+<td colspan="5" style="border-bottom: 1px solid"><strong>Model Intercepts</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Intercept (Female-Angry-White-Female P.)</td>
+<td style="text-align: right;">4.696</td>
+<td style="text-align: right;">4.472</td>
+<td style="text-align: right;">4.928</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Intercept (Female-Angry-White-Female P.)</td>
+<td style="text-align: right;">1.961</td>
+<td style="text-align: right;">1.635</td>
+<td style="text-align: right;">2.301</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma_Intercept (Female-Angry-White-Female P.)</td>
+<td style="text-align: right;">2.138</td>
+<td style="text-align: right;">2.066</td>
+<td style="text-align: right;">2.217</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">delta_Intercept (Female-Angry-White-Female P.)</td>
+<td style="text-align: right;">-2.273</td>
+<td style="text-align: right;">-2.361</td>
+<td style="text-align: right;">-2.195</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="even" data-grouplength="14">
+<td colspan="5" style="border-bottom: 1px solid"><strong>v (correct drift)</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Emotion (happy)</td>
+<td style="text-align: right;">0.710</td>
+<td style="text-align: right;">0.590</td>
+<td style="text-align: right;">0.837</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Race (Black)</td>
+<td style="text-align: right;">0.264</td>
+<td style="text-align: right;">0.165</td>
+<td style="text-align: right;">0.364</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Gender (male)</td>
+<td style="text-align: right;">0.116</td>
+<td style="text-align: right;">0.013</td>
+<td style="text-align: right;">0.218</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Person Sex (Male)</td>
+<td style="text-align: right;">0.291</td>
+<td style="text-align: right;">-0.021</td>
+<td style="text-align: right;">0.584</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Emotion (happy) X Target Race (Black)</td>
+<td style="text-align: right;">-0.500</td>
+<td style="text-align: right;">-0.630</td>
+<td style="text-align: right;">-0.361</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Emotion (happy) X Target Gender (male)</td>
+<td style="text-align: right;">-0.527</td>
+<td style="text-align: right;">-0.661</td>
+<td style="text-align: right;">-0.394</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Race (Black) X Target Gender (male)</td>
+<td style="text-align: right;">0.008</td>
+<td style="text-align: right;">-0.120</td>
+<td style="text-align: right;">0.135</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Emotion (happy) X Person Sex (Male)</td>
+<td style="text-align: right;">-0.129</td>
+<td style="text-align: right;">-0.297</td>
+<td style="text-align: right;">0.038</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Gender (male) X Person Sex (Male)</td>
+<td style="text-align: right;">-0.127</td>
+<td style="text-align: right;">-0.263</td>
+<td style="text-align: right;">0.012</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Race (Black) X Person Sex (Male)</td>
+<td style="text-align: right;">-0.011</td>
+<td style="text-align: right;">-0.139</td>
+<td style="text-align: right;">0.122</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Emotion (happy) X Target Race (Black) X Target Gender (male)</td>
+<td style="text-align: right;">0.319</td>
+<td style="text-align: right;">0.162</td>
+<td style="text-align: right;">0.473</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Emotion (happy) X Target Gender (male) X Person Sex (Male)</td>
+<td style="text-align: right;">0.324</td>
+<td style="text-align: right;">0.162</td>
+<td style="text-align: right;">0.481</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Emotion (happy) X Target Race (Black) X Person Sex (Male)</td>
+<td style="text-align: right;">-0.018</td>
+<td style="text-align: right;">-0.175</td>
+<td style="text-align: right;">0.133</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Race (Black) X Target Gender (male) X Person Sex (Male)</td>
+<td style="text-align: right;">0.073</td>
+<td style="text-align: right;">-0.088</td>
+<td style="text-align: right;">0.223</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd" data-grouplength="14">
+<td colspan="5" style="border-bottom: 1px solid"><strong>kappa (incorrect drift)</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Emotion (happy)</td>
+<td style="text-align: right;">-0.384</td>
+<td style="text-align: right;">-0.666</td>
+<td style="text-align: right;">-0.102</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Race (Black)</td>
+<td style="text-align: right;">-0.446</td>
+<td style="text-align: right;">-0.729</td>
+<td style="text-align: right;">-0.189</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Gender (male)</td>
+<td style="text-align: right;">-0.179</td>
+<td style="text-align: right;">-0.428</td>
+<td style="text-align: right;">0.057</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Person Sex (Male)</td>
+<td style="text-align: right;">-0.011</td>
+<td style="text-align: right;">-0.452</td>
+<td style="text-align: right;">0.428</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Emotion (happy) X Target Race (Black)</td>
+<td style="text-align: right;">0.358</td>
+<td style="text-align: right;">-0.018</td>
+<td style="text-align: right;">0.727</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Emotion (happy) X Target Gender (male)</td>
+<td style="text-align: right;">0.400</td>
+<td style="text-align: right;">0.067</td>
+<td style="text-align: right;">0.725</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Race (Black) X Target Gender (male)</td>
+<td style="text-align: right;">0.084</td>
+<td style="text-align: right;">-0.239</td>
+<td style="text-align: right;">0.417</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Emotion (happy) X Person Sex (Male)</td>
+<td style="text-align: right;">0.208</td>
+<td style="text-align: right;">-0.168</td>
+<td style="text-align: right;">0.573</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Gender (male) X Person Sex (Male)</td>
+<td style="text-align: right;">0.322</td>
+<td style="text-align: right;">0.001</td>
+<td style="text-align: right;">0.640</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Race (Black) X Person Sex (Male)</td>
+<td style="text-align: right;">0.246</td>
+<td style="text-align: right;">-0.109</td>
+<td style="text-align: right;">0.615</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Emotion (happy) X Target Race (Black) X Target Gender (male)</td>
+<td style="text-align: right;">0.282</td>
+<td style="text-align: right;">-0.111</td>
+<td style="text-align: right;">0.680</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Emotion (happy) X Target Gender (male) X Person Sex (Male)</td>
+<td style="text-align: right;">-0.735</td>
+<td style="text-align: right;">-1.125</td>
+<td style="text-align: right;">-0.308</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Emotion (happy) X Target Race (Black) X Person Sex (Male)</td>
+<td style="text-align: right;">-0.089</td>
+<td style="text-align: right;">-0.505</td>
+<td style="text-align: right;">0.325</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Race (Black) X Target Gender (male) X Person Sex (Male)</td>
+<td style="text-align: right;">-0.212</td>
+<td style="text-align: right;">-0.600</td>
+<td style="text-align: right;">0.195</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="trace-plots" class="level3">
+<h3 class="anchored" data-anchor-id="trace-plots">Trace Plots</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Expt1_Combined/Racing/trace_plots.png" class="img-fluid figure-img"></p>
+<figcaption>Trace plots for population-level parameters</figcaption>
+</figure>
+</div>
+<p>The trace plots show MCMC chains for each population-level parameter. Good mixing—indicated by overlapping chains without systematic trends—demonstrates successful convergence of the sampling algorithm.</p>
+</section>
+<section id="posterior-densities" class="level3">
+<h3 class="anchored" data-anchor-id="posterior-densities">Posterior Densities</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Expt1_Combined/Racing/posterior_areas.png" class="img-fluid figure-img"></p>
+<figcaption>Posterior densities with 89% and 95% credible intervals</figcaption>
+</figure>
+</div>
+<p>Posterior densities are smooth and unimodal, with no evidence of multimodality or boundary effects. Inner (89%) and outer (95%) credible intervals provide uncertainty quantification.</p>
+</section>
+<section id="overall-rt-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="overall-rt-distribution">Overall RT Distribution</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Expt1_Combined/Racing/ppc_overall_rt.png" class="img-fluid figure-img"></p>
+<figcaption>PPC: Overall RT distribution</figcaption>
+</figure>
+</div>
+<p>The overall response time distribution from the model (red) closely matches the observed data (blue), indicating the RDM captures the central tendency and spread of response times.</p>
+</section>
+<section id="rt-distribution-by-choice-accuracy" class="level3">
+<h3 class="anchored" data-anchor-id="rt-distribution-by-choice-accuracy">RT Distribution by Choice Accuracy</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Expt1_Combined/Racing/ppc_rt_by_choice.png" class="img-fluid figure-img"></p>
+<figcaption>PPC: RT distribution by choice</figcaption>
+</figure>
+</div>
+<p>Separating by response accuracy (correct vs.&nbsp;incorrect) reveals the model’s ability to capture the faster RTs associated with correct responses. Predicted distributions align well with observed data.</p>
+</section>
+<section id="rt-distribution-by-expression" class="level3">
+<h3 class="anchored" data-anchor-id="rt-distribution-by-expression">RT Distribution by Expression</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Expt1_Combined/Racing/ppc_rt_by_expression.png" class="img-fluid figure-img"></p>
+<figcaption>PPC: RT distribution by expression</figcaption>
+</figure>
+</div>
+<p>The model captures expression-based differences in processing efficiency, with predicted distributions for fearful and happy faces closely mirroring observed data.</p>
+</section>
+<section id="summary-statistics" class="level3">
+<h3 class="anchored" data-anchor-id="summary-statistics">Summary Statistics</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Expt1_Combined/Racing/ppc_summary_stats.png" class="img-fluid figure-img"></p>
+<figcaption>PPC: Summary statistics</figcaption>
+</figure>
+</div>
+<p>Observed summary statistics (mean, SD, 10th, 50th, and 90th percentiles) fall within the posterior predictive distributions, indicating good model fit across distributional properties.</p>
+</section>
+<section id="accuracy-ppc" class="level3">
+<h3 class="anchored" data-anchor-id="accuracy-ppc">Accuracy PPC</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Expt1_Combined/Racing/ppc_accuracy.png" class="img-fluid figure-img"></p>
+<figcaption>PPC: Proportion correct</figcaption>
+</figure>
+</div>
+<p>The model accurately captures the observed accuracy, with the posterior predictive distribution centered near the observed value.</p>
+</section>
+<section id="random-effect-sds" class="level3">
+<h3 class="anchored" data-anchor-id="random-effect-sds">Random Effect SDs</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Expt1_Combined/Racing/posterior_random_effect_sds.png" class="img-fluid figure-img"></p>
+<figcaption>Random effect standard deviations</figcaption>
+</figure>
+</div>
+<p>Non-zero standard deviations with credible intervals away from zero indicate meaningful individual differences in model parameters.</p>
+</section>
+</section>
+<section id="experiment-2" class="level2">
+<h2 class="anchored" data-anchor-id="experiment-2">Experiment 2</h2>
+<section id="fixed-effect-coefficients-1" class="level3">
+<h3 class="anchored" data-anchor-id="fixed-effect-coefficients-1">Fixed effect Coefficients</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table class="lightable-classic caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Parameter (coefficients)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Median</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">CI-lower</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">CI-upper</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Bayesian 95% Credible</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd" data-grouplength="4">
+<td colspan="5" style="border-bottom: 1px solid"><strong>Model Intercepts</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Intercept = Female, Angry, White face</td>
+<td style="text-align: right;">5.128</td>
+<td style="text-align: right;">4.892</td>
+<td style="text-align: right;">5.354</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Intercept = Female, Angry, White face</td>
+<td style="text-align: right;">2.380</td>
+<td style="text-align: right;">2.066</td>
+<td style="text-align: right;">2.698</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma_Intercept = Female, Angry, White face</td>
+<td style="text-align: right;">2.315</td>
+<td style="text-align: right;">2.274</td>
+<td style="text-align: right;">2.357</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">delta_Intercept = Female, Angry, White face</td>
+<td style="text-align: right;">-2.150</td>
+<td style="text-align: right;">-2.188</td>
+<td style="text-align: right;">-2.109</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="even" data-grouplength="30">
+<td colspan="5" style="border-bottom: 1px solid"><strong>v (correct drift)</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Person Sex (male)</td>
+<td style="text-align: right;">-0.262</td>
+<td style="text-align: right;">-0.586</td>
+<td style="text-align: right;">0.071</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Gender (male)</td>
+<td style="text-align: right;">0.221</td>
+<td style="text-align: right;">0.132</td>
+<td style="text-align: right;">0.309</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Emotion (happy)</td>
+<td style="text-align: right;">0.707</td>
+<td style="text-align: right;">0.605</td>
+<td style="text-align: right;">0.819</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Race (black)</td>
+<td style="text-align: right;">0.325</td>
+<td style="text-align: right;">0.240</td>
+<td style="text-align: right;">0.411</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Person Race (black)</td>
+<td style="text-align: right;">-0.117</td>
+<td style="text-align: right;">-0.419</td>
+<td style="text-align: right;">0.209</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Person Sex (male) X Target Gender (male)</td>
+<td style="text-align: right;">-0.247</td>
+<td style="text-align: right;">-0.363</td>
+<td style="text-align: right;">-0.123</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Person Sex (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">-0.099</td>
+<td style="text-align: right;">-0.255</td>
+<td style="text-align: right;">0.053</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Gender (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">-0.601</td>
+<td style="text-align: right;">-0.730</td>
+<td style="text-align: right;">-0.470</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Person Sex (male) X Target Race (black)</td>
+<td style="text-align: right;">-0.041</td>
+<td style="text-align: right;">-0.157</td>
+<td style="text-align: right;">0.074</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Gender (male) X Target Race (black)</td>
+<td style="text-align: right;">-0.095</td>
+<td style="text-align: right;">-0.207</td>
+<td style="text-align: right;">0.018</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">-0.446</td>
+<td style="text-align: right;">-0.568</td>
+<td style="text-align: right;">-0.318</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Person Sex (male) X Person Race (black)</td>
+<td style="text-align: right;">0.090</td>
+<td style="text-align: right;">-0.384</td>
+<td style="text-align: right;">0.561</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Gender (male) X Person Race (black)</td>
+<td style="text-align: right;">-0.166</td>
+<td style="text-align: right;">-0.286</td>
+<td style="text-align: right;">-0.047</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">-0.126</td>
+<td style="text-align: right;">-0.276</td>
+<td style="text-align: right;">0.026</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">-0.234</td>
+<td style="text-align: right;">-0.351</td>
+<td style="text-align: right;">-0.119</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Person Sex (male) X Target Gender (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">0.378</td>
+<td style="text-align: right;">0.208</td>
+<td style="text-align: right;">0.544</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Person Sex (male) X Target Gender (male) X Target Race (black)</td>
+<td style="text-align: right;">0.127</td>
+<td style="text-align: right;">-0.021</td>
+<td style="text-align: right;">0.268</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Person Sex (male) X Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">-0.133</td>
+<td style="text-align: right;">-0.298</td>
+<td style="text-align: right;">0.030</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Gender (male) X Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">0.335</td>
+<td style="text-align: right;">0.184</td>
+<td style="text-align: right;">0.479</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Person Sex (male) X Target Gender (male) X Person Race (black)</td>
+<td style="text-align: right;">0.201</td>
+<td style="text-align: right;">0.043</td>
+<td style="text-align: right;">0.355</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Person Sex (male) X Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">0.115</td>
+<td style="text-align: right;">-0.085</td>
+<td style="text-align: right;">0.321</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Gender (male) X Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">0.181</td>
+<td style="text-align: right;">0.012</td>
+<td style="text-align: right;">0.345</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Person Sex (male) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">0.141</td>
+<td style="text-align: right;">-0.003</td>
+<td style="text-align: right;">0.293</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Gender (male) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">0.201</td>
+<td style="text-align: right;">0.055</td>
+<td style="text-align: right;">0.346</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Emotion (happy) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">0.304</td>
+<td style="text-align: right;">0.148</td>
+<td style="text-align: right;">0.466</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Person Sex (male) X Target Gender (male) X Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">0.094</td>
+<td style="text-align: right;">-0.071</td>
+<td style="text-align: right;">0.267</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Person Sex (male) X Target Gender (male) X Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">-0.131</td>
+<td style="text-align: right;">-0.319</td>
+<td style="text-align: right;">0.073</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Person Sex (male) X Target Gender (male) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">-0.242</td>
+<td style="text-align: right;">-0.413</td>
+<td style="text-align: right;">-0.071</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Person Sex (male) X Target Emotion (happy) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">0.054</td>
+<td style="text-align: right;">-0.144</td>
+<td style="text-align: right;">0.252</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Gender (male) X Target Emotion (happy) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">-0.184</td>
+<td style="text-align: right;">-0.355</td>
+<td style="text-align: right;">-0.015</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="odd" data-grouplength="30">
+<td colspan="5" style="border-bottom: 1px solid"><strong>kappa (incorrect drift)</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Person Sex (male)</td>
+<td style="text-align: right;">-0.318</td>
+<td style="text-align: right;">-0.756</td>
+<td style="text-align: right;">0.150</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Gender (male)</td>
+<td style="text-align: right;">-0.073</td>
+<td style="text-align: right;">-0.293</td>
+<td style="text-align: right;">0.147</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Emotion (happy)</td>
+<td style="text-align: right;">-0.298</td>
+<td style="text-align: right;">-0.551</td>
+<td style="text-align: right;">-0.051</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Race (black)</td>
+<td style="text-align: right;">-0.178</td>
+<td style="text-align: right;">-0.402</td>
+<td style="text-align: right;">0.060</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Person Race (black)</td>
+<td style="text-align: right;">-0.169</td>
+<td style="text-align: right;">-0.608</td>
+<td style="text-align: right;">0.269</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Person Sex (male) X Target Gender (male)</td>
+<td style="text-align: right;">0.051</td>
+<td style="text-align: right;">-0.265</td>
+<td style="text-align: right;">0.348</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Person Sex (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">0.014</td>
+<td style="text-align: right;">-0.341</td>
+<td style="text-align: right;">0.357</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Gender (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">0.033</td>
+<td style="text-align: right;">-0.293</td>
+<td style="text-align: right;">0.351</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Person Sex (male) X Target Race (black)</td>
+<td style="text-align: right;">-0.316</td>
+<td style="text-align: right;">-0.626</td>
+<td style="text-align: right;">-0.003</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Gender (male) X Target Race (black)</td>
+<td style="text-align: right;">-0.186</td>
+<td style="text-align: right;">-0.465</td>
+<td style="text-align: right;">0.102</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">0.273</td>
+<td style="text-align: right;">-0.056</td>
+<td style="text-align: right;">0.576</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Person Sex (male) X Person Race (black)</td>
+<td style="text-align: right;">0.231</td>
+<td style="text-align: right;">-0.409</td>
+<td style="text-align: right;">0.863</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Gender (male) X Person Race (black)</td>
+<td style="text-align: right;">-0.115</td>
+<td style="text-align: right;">-0.421</td>
+<td style="text-align: right;">0.196</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">0.074</td>
+<td style="text-align: right;">-0.283</td>
+<td style="text-align: right;">0.411</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">0.180</td>
+<td style="text-align: right;">-0.123</td>
+<td style="text-align: right;">0.471</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Person Sex (male) X Target Gender (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">-0.407</td>
+<td style="text-align: right;">-0.824</td>
+<td style="text-align: right;">0.023</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Person Sex (male) X Target Gender (male) X Target Race (black)</td>
+<td style="text-align: right;">0.241</td>
+<td style="text-align: right;">-0.118</td>
+<td style="text-align: right;">0.612</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Person Sex (male) X Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">0.387</td>
+<td style="text-align: right;">-0.008</td>
+<td style="text-align: right;">0.806</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Gender (male) X Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">0.530</td>
+<td style="text-align: right;">0.162</td>
+<td style="text-align: right;">0.900</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Person Sex (male) X Target Gender (male) X Person Race (black)</td>
+<td style="text-align: right;">0.184</td>
+<td style="text-align: right;">-0.246</td>
+<td style="text-align: right;">0.613</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Person Sex (male) X Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">-0.187</td>
+<td style="text-align: right;">-0.646</td>
+<td style="text-align: right;">0.285</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Gender (male) X Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">0.445</td>
+<td style="text-align: right;">0.034</td>
+<td style="text-align: right;">0.860</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Person Sex (male) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">-0.009</td>
+<td style="text-align: right;">-0.414</td>
+<td style="text-align: right;">0.414</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Gender (male) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">-0.011</td>
+<td style="text-align: right;">-0.362</td>
+<td style="text-align: right;">0.351</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Emotion (happy) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">-0.419</td>
+<td style="text-align: right;">-0.818</td>
+<td style="text-align: right;">-0.023</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Person Sex (male) X Target Gender (male) X Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">-0.285</td>
+<td style="text-align: right;">-0.711</td>
+<td style="text-align: right;">0.123</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Person Sex (male) X Target Gender (male) X Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">-0.033</td>
+<td style="text-align: right;">-0.558</td>
+<td style="text-align: right;">0.519</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Person Sex (male) X Target Gender (male) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">-0.011</td>
+<td style="text-align: right;">-0.436</td>
+<td style="text-align: right;">0.419</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Person Sex (male) X Target Emotion (happy) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">0.284</td>
+<td style="text-align: right;">-0.219</td>
+<td style="text-align: right;">0.770</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Gender (male) X Target Emotion (happy) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">-0.377</td>
+<td style="text-align: right;">-0.799</td>
+<td style="text-align: right;">0.046</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="trace-plots-1" class="level3">
+<h3 class="anchored" data-anchor-id="trace-plots-1">Trace Plots</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Expt2_Combined/Racing/trace_plots.png" class="img-fluid figure-img"></p>
+<figcaption>Trace plots for population-level parameters</figcaption>
+</figure>
+</div>
+<p>Trace plots for Experiment 2 similarly demonstrate good mixing across chains, indicating successful convergence.</p>
+<!-- ### Posterior Densities MEMORY ISSUES -->
+<!-- ![Posterior densities with 89% and 95% credible intervals](Expt2_Combined/Racing/posterior_areas.png) -->
+<!-- Posterior densities are smooth and unimodal, with no evidence of estimation issues. -->
+</section>
+<section id="overall-rt-distribution-1" class="level3">
+<h3 class="anchored" data-anchor-id="overall-rt-distribution-1">Overall RT Distribution</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Expt2_Combined/Racing/ppc_overall_rt.png" class="img-fluid figure-img"></p>
+<figcaption>PPC: Overall RT distribution</figcaption>
+</figure>
+</div>
+<p>The model captures the overall RT distribution well, with predicted and observed densities showing close alignment.</p>
+</section>
+<section id="rt-distribution-by-choice-accuracy-1" class="level3">
+<h3 class="anchored" data-anchor-id="rt-distribution-by-choice-accuracy-1">RT Distribution by Choice Accuracy</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Expt2_Combined/Racing/ppc_rt_by_choice.png" class="img-fluid figure-img"></p>
+<figcaption>PPC: RT distribution by choice</figcaption>
+</figure>
+</div>
+<p>The model reproduces the RT difference between correct and incorrect responses.</p>
+</section>
+<section id="rt-distribution-by-expression-1" class="level3">
+<h3 class="anchored" data-anchor-id="rt-distribution-by-expression-1">RT Distribution by Expression</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Expt2_Combined/Racing/ppc_rt_by_expression.png" class="img-fluid figure-img"></p>
+<figcaption>PPC: RT distribution by expression</figcaption>
+</figure>
+</div>
+<p>Expression-based differences in RT are well captured by the model.</p>
+</section>
+<section id="summary-statistics-1" class="level3">
+<h3 class="anchored" data-anchor-id="summary-statistics-1">Summary Statistics</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Expt2_Combined/Racing/ppc_summary_stats.png" class="img-fluid figure-img"></p>
+<figcaption>PPC: Summary statistics</figcaption>
+</figure>
+</div>
+<p>All observed summary statistics fall within predicted ranges.</p>
+</section>
+<section id="accuracy-ppc-1" class="level3">
+<h3 class="anchored" data-anchor-id="accuracy-ppc-1">Accuracy PPC</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Expt2_Combined/Racing/ppc_accuracy.png" class="img-fluid figure-img"></p>
+<figcaption>PPC: Proportion correct</figcaption>
+</figure>
+</div>
+<p>The model accurately captures the high accuracy observed in Experiment 2.</p>
+</section>
+<section id="random-effect-sds-1" class="level3">
+<h3 class="anchored" data-anchor-id="random-effect-sds-1">Random Effect SDs</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Expt2_Combined/Racing/posterior_random_effect_sds.png" class="img-fluid figure-img"></p>
+<figcaption>Random effect standard deviations</figcaption>
+</figure>
+</div>
+<p>Meaningful individual differences are evident across parameters.</p>
+</section>
+</section>
+<section id="experiment-3" class="level2">
+<h2 class="anchored" data-anchor-id="experiment-3">Experiment 3</h2>
+<section id="fixed-effect-coefficients-2" class="level3">
+<h3 class="anchored" data-anchor-id="fixed-effect-coefficients-2">Fixed Effect Coefficients</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table class="lightable-classic caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Parameter (coefficients)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Median</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">CI-lower</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">CI-upper</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Bayesian 95% Credible</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd" data-grouplength="4">
+<td colspan="5" style="border-bottom: 1px solid"><strong>Model Intercepts</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Intercept = Female, Angry, White face</td>
+<td style="text-align: right;">5.500</td>
+<td style="text-align: right;">5.258</td>
+<td style="text-align: right;">5.750</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Intercept = Female, Angry, White face</td>
+<td style="text-align: right;">2.012</td>
+<td style="text-align: right;">1.656</td>
+<td style="text-align: right;">2.370</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma_Intercept = Female, Angry, White face</td>
+<td style="text-align: right;">2.440</td>
+<td style="text-align: right;">2.384</td>
+<td style="text-align: right;">2.503</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">delta_Intercept = Female, Angry, White face</td>
+<td style="text-align: right;">-2.331</td>
+<td style="text-align: right;">-2.409</td>
+<td style="text-align: right;">-2.268</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="even" data-grouplength="25">
+<td colspan="5" style="border-bottom: 1px solid"><strong>v (correct drift)</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Person Sex (male)</td>
+<td style="text-align: right;">-0.199</td>
+<td style="text-align: right;">-0.558</td>
+<td style="text-align: right;">0.155</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Gender (male)</td>
+<td style="text-align: right;">-0.098</td>
+<td style="text-align: right;">-0.229</td>
+<td style="text-align: right;">0.040</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Emotion (happy)</td>
+<td style="text-align: right;">0.313</td>
+<td style="text-align: right;">0.200</td>
+<td style="text-align: right;">0.428</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Race (black)</td>
+<td style="text-align: right;">-0.020</td>
+<td style="text-align: right;">-0.148</td>
+<td style="text-align: right;">0.107</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Person Race (black)</td>
+<td style="text-align: right;">-0.397</td>
+<td style="text-align: right;">-0.727</td>
+<td style="text-align: right;">-0.079</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Person Sex (male) X Target Gender (male)</td>
+<td style="text-align: right;">-0.011</td>
+<td style="text-align: right;">-0.183</td>
+<td style="text-align: right;">0.158</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Person Sex (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">0.045</td>
+<td style="text-align: right;">-0.105</td>
+<td style="text-align: right;">0.194</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Gender (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">-0.192</td>
+<td style="text-align: right;">-0.303</td>
+<td style="text-align: right;">-0.083</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Person Sex (male) X Target Race (black)</td>
+<td style="text-align: right;">0.011</td>
+<td style="text-align: right;">-0.163</td>
+<td style="text-align: right;">0.192</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Gender (male) X Target Race (black)</td>
+<td style="text-align: right;">-0.009</td>
+<td style="text-align: right;">-0.114</td>
+<td style="text-align: right;">0.092</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Person Sex (male) X Person Race (black)</td>
+<td style="text-align: right;">-0.029</td>
+<td style="text-align: right;">-0.508</td>
+<td style="text-align: right;">0.449</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Gender (male) X Person Race (black)</td>
+<td style="text-align: right;">-0.065</td>
+<td style="text-align: right;">-0.231</td>
+<td style="text-align: right;">0.106</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">0.019</td>
+<td style="text-align: right;">-0.090</td>
+<td style="text-align: right;">0.125</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">0.036</td>
+<td style="text-align: right;">-0.115</td>
+<td style="text-align: right;">0.184</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">-0.114</td>
+<td style="text-align: right;">-0.289</td>
+<td style="text-align: right;">0.058</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Person Sex (male) X Target Gender (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">-0.024</td>
+<td style="text-align: right;">-0.136</td>
+<td style="text-align: right;">0.084</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Person Sex (male) X Target Gender (male) X Target Race (black)</td>
+<td style="text-align: right;">0.051</td>
+<td style="text-align: right;">-0.050</td>
+<td style="text-align: right;">0.150</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Person Sex (male) X Target Gender (male) X Person Race (black)</td>
+<td style="text-align: right;">0.003</td>
+<td style="text-align: right;">-0.204</td>
+<td style="text-align: right;">0.221</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Person Sex (male) X Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">-0.103</td>
+<td style="text-align: right;">-0.208</td>
+<td style="text-align: right;">0.006</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Person Sex (male) X Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">0.057</td>
+<td style="text-align: right;">-0.119</td>
+<td style="text-align: right;">0.245</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Person Sex (male) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">0.029</td>
+<td style="text-align: right;">-0.193</td>
+<td style="text-align: right;">0.250</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Gender (male) X Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">0.350</td>
+<td style="text-align: right;">0.249</td>
+<td style="text-align: right;">0.454</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Gender (male) X Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">-0.066</td>
+<td style="text-align: right;">-0.183</td>
+<td style="text-align: right;">0.045</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Gender (male) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">0.286</td>
+<td style="text-align: right;">0.183</td>
+<td style="text-align: right;">0.392</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Target Emotion (happy) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">-0.026</td>
+<td style="text-align: right;">-0.139</td>
+<td style="text-align: right;">0.086</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even" data-grouplength="25">
+<td colspan="5" style="border-bottom: 1px solid"><strong>kappa (incorrect drift)</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Person Sex (male)</td>
+<td style="text-align: right;">0.124</td>
+<td style="text-align: right;">-0.344</td>
+<td style="text-align: right;">0.605</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Gender (male)</td>
+<td style="text-align: right;">-0.015</td>
+<td style="text-align: right;">-0.291</td>
+<td style="text-align: right;">0.271</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Emotion (happy)</td>
+<td style="text-align: right;">-0.006</td>
+<td style="text-align: right;">-0.260</td>
+<td style="text-align: right;">0.242</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Race (black)</td>
+<td style="text-align: right;">-0.096</td>
+<td style="text-align: right;">-0.385</td>
+<td style="text-align: right;">0.192</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Person Race (black)</td>
+<td style="text-align: right;">-0.244</td>
+<td style="text-align: right;">-0.738</td>
+<td style="text-align: right;">0.236</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Person Sex (male) X Target Gender (male)</td>
+<td style="text-align: right;">-0.019</td>
+<td style="text-align: right;">-0.364</td>
+<td style="text-align: right;">0.317</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Person Sex (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">-0.015</td>
+<td style="text-align: right;">-0.323</td>
+<td style="text-align: right;">0.301</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Gender (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">0.449</td>
+<td style="text-align: right;">0.166</td>
+<td style="text-align: right;">0.731</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Person Sex (male) X Target Race (black)</td>
+<td style="text-align: right;">0.090</td>
+<td style="text-align: right;">-0.263</td>
+<td style="text-align: right;">0.447</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Gender (male) X Target Race (black)</td>
+<td style="text-align: right;">-0.195</td>
+<td style="text-align: right;">-0.468</td>
+<td style="text-align: right;">0.083</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Person Sex (male) X Person Race (black)</td>
+<td style="text-align: right;">0.007</td>
+<td style="text-align: right;">-0.635</td>
+<td style="text-align: right;">0.665</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Gender (male) X Person Race (black)</td>
+<td style="text-align: right;">-0.020</td>
+<td style="text-align: right;">-0.381</td>
+<td style="text-align: right;">0.321</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">-0.044</td>
+<td style="text-align: right;">-0.330</td>
+<td style="text-align: right;">0.239</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">0.079</td>
+<td style="text-align: right;">-0.223</td>
+<td style="text-align: right;">0.395</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">0.096</td>
+<td style="text-align: right;">-0.266</td>
+<td style="text-align: right;">0.470</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Person Sex (male) X Target Gender (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">-0.305</td>
+<td style="text-align: right;">-0.579</td>
+<td style="text-align: right;">-0.025</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Person Sex (male) X Target Gender (male) X Target Race (black)</td>
+<td style="text-align: right;">-0.025</td>
+<td style="text-align: right;">-0.302</td>
+<td style="text-align: right;">0.227</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Person Sex (male) X Target Gender (male) X Person Race (black)</td>
+<td style="text-align: right;">-0.019</td>
+<td style="text-align: right;">-0.445</td>
+<td style="text-align: right;">0.407</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Person Sex (male) X Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">0.113</td>
+<td style="text-align: right;">-0.166</td>
+<td style="text-align: right;">0.395</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Person Sex (male) X Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">-0.003</td>
+<td style="text-align: right;">-0.363</td>
+<td style="text-align: right;">0.359</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Person Sex (male) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">-0.094</td>
+<td style="text-align: right;">-0.548</td>
+<td style="text-align: right;">0.341</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Gender (male) X Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">-0.051</td>
+<td style="text-align: right;">-0.313</td>
+<td style="text-align: right;">0.213</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Gender (male) X Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">-0.335</td>
+<td style="text-align: right;">-0.626</td>
+<td style="text-align: right;">-0.046</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Gender (male) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">0.434</td>
+<td style="text-align: right;">0.170</td>
+<td style="text-align: right;">0.691</td>
+<td style="text-align: left;">credible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">k Target Emotion (happy) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">-0.092</td>
+<td style="text-align: right;">-0.375</td>
+<td style="text-align: right;">0.195</td>
+<td style="text-align: left;">not credible</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="trace-plots-2" class="level3">
+<h3 class="anchored" data-anchor-id="trace-plots-2">Trace Plots</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Expt3_Combined/Racing/trace_plots.png" class="img-fluid figure-img"></p>
+<figcaption>Trace plots for population-level parameters</figcaption>
+</figure>
+</div>
+<p>Trace plots for Experiment 3 show good mixing, confirming convergence.</p>
+<!-- ### Posterior Densities MEMORY ISSUES-->
+<!-- ![Posterior densities with 89% and 95% credible intervals](Expt3_Combined/Racing/posterior_areas.png) -->
+<!-- Posterior densities are well-behaved with no multimodality. -->
+</section>
+<section id="overall-rt-distribution-2" class="level3">
+<h3 class="anchored" data-anchor-id="overall-rt-distribution-2">Overall RT Distribution</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Expt3_Combined/Racing/ppc_overall_rt.png" class="img-fluid figure-img"></p>
+<figcaption>PPC: Overall RT distribution</figcaption>
+</figure>
+</div>
+<p>The model captures the RT distribution effectively.</p>
+</section>
+<section id="rt-distribution-by-choice-accuracy-2" class="level3">
+<h3 class="anchored" data-anchor-id="rt-distribution-by-choice-accuracy-2">RT Distribution by Choice Accuracy</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Expt3_Combined/Racing/ppc_rt_by_choice.png" class="img-fluid figure-img"></p>
+<figcaption>PPC: RT distribution by choice</figcaption>
+</figure>
+</div>
+<p>The RT difference between correct and incorrect responses is well reproduced.</p>
+</section>
+<section id="rt-distribution-by-expression-2" class="level3">
+<h3 class="anchored" data-anchor-id="rt-distribution-by-expression-2">RT Distribution by Expression</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Expt3_Combined/Racing/ppc_rt_by_expression.png" class="img-fluid figure-img"></p>
+<figcaption>PPC: RT distribution by expression</figcaption>
+</figure>
+</div>
+<p>Expression effects on RT are captured accurately.</p>
+</section>
+<section id="summary-statistics-2" class="level3">
+<h3 class="anchored" data-anchor-id="summary-statistics-2">Summary Statistics</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Expt3_Combined/Racing/ppc_summary_stats.png" class="img-fluid figure-img"></p>
+<figcaption>PPC: Summary statistics</figcaption>
+</figure>
+</div>
+<p>Observed statistics fall within predictive distributions.</p>
+</section>
+<section id="accuracy-ppc-2" class="level3">
+<h3 class="anchored" data-anchor-id="accuracy-ppc-2">Accuracy PPC</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Expt3_Combined/Racing/ppc_accuracy.png" class="img-fluid figure-img"></p>
+<figcaption>PPC: Proportion correct</figcaption>
+</figure>
+</div>
+<p>Model predictions align with observed accuracy.</p>
+</section>
+<section id="random-effect-sds-2" class="level3">
+<h3 class="anchored" data-anchor-id="random-effect-sds-2">Random Effect SDs</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Expt3_Combined/Racing/posterior_random_effect_sds.png" class="img-fluid figure-img"></p>
+<figcaption>Random effect standard deviations</figcaption>
+</figure>
+</div>
+<p>Individual differences are present across all parameters.</p>
+<hr>
+</section>
+</section>
+</section>
+<section id="ex-gaussian-models" class="level1">
+<h1>Ex-Gaussian Models</h1>
+<p>Ex-Gaussian models were fitted using <code>gamlss</code> to decompose response time distributions into three parameters: mu (μ; mean of the normal component), sigma (σ; standard deviation of the normal component), and nu (ν; exponential tail parameter). Model validation was assessed using quantile-based diagnostics.</p>
+<section id="experiment-1-1" class="level2">
+<h2 class="anchored" data-anchor-id="experiment-1-1">Experiment 1</h2>
+<section id="fixed-effect-coefficients-3" class="level3">
+<h3 class="anchored" data-anchor-id="fixed-effect-coefficients-3">Fixed effect Coefficients</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table class="lightable-classic caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Parameter</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Term</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Estimate</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">CI-lower</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">CI-upper</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd" data-grouplength="16">
+<td colspan="6" style="border-bottom: 1px solid"><strong>mu (seconds)</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">(Intercept = Female, Angry, White face)</td>
+<td style="text-align: right;">0.433</td>
+<td style="text-align: right;">0.428</td>
+<td style="text-align: right;">0.437</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male)</td>
+<td style="text-align: right;">-0.009</td>
+<td style="text-align: right;">-0.015</td>
+<td style="text-align: right;">-0.002</td>
+<td style="text-align: left;">.008</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Target Gender (male)</td>
+<td style="text-align: right;">-0.006</td>
+<td style="text-align: right;">-0.013</td>
+<td style="text-align: right;">0.001</td>
+<td style="text-align: left;">.086</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Target Emotion (happy)</td>
+<td style="text-align: right;">-0.037</td>
+<td style="text-align: right;">-0.043</td>
+<td style="text-align: right;">-0.030</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Target Race (black)</td>
+<td style="text-align: right;">0.001</td>
+<td style="text-align: right;">-0.005</td>
+<td style="text-align: right;">0.008</td>
+<td style="text-align: left;">.656</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male)</td>
+<td style="text-align: right;">0.007</td>
+<td style="text-align: right;">-0.002</td>
+<td style="text-align: right;">0.017</td>
+<td style="text-align: left;">.115</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">0.020</td>
+<td style="text-align: right;">0.011</td>
+<td style="text-align: right;">0.028</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Target Gender (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">0.017</td>
+<td style="text-align: right;">0.008</td>
+<td style="text-align: right;">0.026</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male) X Target Race (black)</td>
+<td style="text-align: right;">-0.009</td>
+<td style="text-align: right;">-0.018</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: left;">.049</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Target Gender (male) X Target Race (black)</td>
+<td style="text-align: right;">-0.010</td>
+<td style="text-align: right;">-0.019</td>
+<td style="text-align: right;">-0.001</td>
+<td style="text-align: left;">.028</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">0.017</td>
+<td style="text-align: right;">0.007</td>
+<td style="text-align: right;">0.026</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">-0.030</td>
+<td style="text-align: right;">-0.042</td>
+<td style="text-align: right;">-0.018</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Race (black)</td>
+<td style="text-align: right;">0.016</td>
+<td style="text-align: right;">0.004</td>
+<td style="text-align: right;">0.028</td>
+<td style="text-align: left;">.009</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male) X Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">-0.006</td>
+<td style="text-align: right;">-0.018</td>
+<td style="text-align: right;">0.006</td>
+<td style="text-align: left;">.325</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Target Gender (male) X Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">0.004</td>
+<td style="text-align: right;">-0.008</td>
+<td style="text-align: right;">0.017</td>
+<td style="text-align: left;">.518</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">0.002</td>
+<td style="text-align: right;">-0.015</td>
+<td style="text-align: right;">0.019</td>
+<td style="text-align: left;">.842</td>
+</tr>
+<tr class="even" data-grouplength="16">
+<td colspan="6" style="border-bottom: 1px solid"><strong>sigma (log units)</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">(Intercept = Female, Angry, White face)</td>
+<td style="text-align: right;">-2.681</td>
+<td style="text-align: right;">-2.773</td>
+<td style="text-align: right;">-2.589</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male)</td>
+<td style="text-align: right;">-0.094</td>
+<td style="text-align: right;">-0.218</td>
+<td style="text-align: right;">0.029</td>
+<td style="text-align: left;">.135</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Target Gender (male)</td>
+<td style="text-align: right;">0.010</td>
+<td style="text-align: right;">-0.120</td>
+<td style="text-align: right;">0.140</td>
+<td style="text-align: left;">.881</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Target Emotion (happy)</td>
+<td style="text-align: right;">-0.037</td>
+<td style="text-align: right;">-0.168</td>
+<td style="text-align: right;">0.094</td>
+<td style="text-align: left;">.579</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Target Race (black)</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">-0.127</td>
+<td style="text-align: right;">0.126</td>
+<td style="text-align: left;">.994</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male)</td>
+<td style="text-align: right;">-0.028</td>
+<td style="text-align: right;">-0.206</td>
+<td style="text-align: right;">0.150</td>
+<td style="text-align: left;">.759</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">0.040</td>
+<td style="text-align: right;">-0.131</td>
+<td style="text-align: right;">0.211</td>
+<td style="text-align: left;">.646</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Target Gender (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">-0.090</td>
+<td style="text-align: right;">-0.278</td>
+<td style="text-align: right;">0.097</td>
+<td style="text-align: left;">.344</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male) X Target Race (black)</td>
+<td style="text-align: right;">-0.146</td>
+<td style="text-align: right;">-0.321</td>
+<td style="text-align: right;">0.029</td>
+<td style="text-align: left;">.102</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Target Gender (male) X Target Race (black)</td>
+<td style="text-align: right;">-0.153</td>
+<td style="text-align: right;">-0.335</td>
+<td style="text-align: right;">0.028</td>
+<td style="text-align: left;">.098</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">0.095</td>
+<td style="text-align: right;">-0.084</td>
+<td style="text-align: right;">0.274</td>
+<td style="text-align: left;">.297</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">-0.114</td>
+<td style="text-align: right;">-0.369</td>
+<td style="text-align: right;">0.141</td>
+<td style="text-align: left;">.381</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Race (black)</td>
+<td style="text-align: right;">0.266</td>
+<td style="text-align: right;">0.018</td>
+<td style="text-align: right;">0.515</td>
+<td style="text-align: left;">.036</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male) X Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">0.083</td>
+<td style="text-align: right;">-0.160</td>
+<td style="text-align: right;">0.325</td>
+<td style="text-align: left;">.504</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Target Gender (male) X Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">0.198</td>
+<td style="text-align: right;">-0.059</td>
+<td style="text-align: right;">0.455</td>
+<td style="text-align: left;">.131</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">-0.127</td>
+<td style="text-align: right;">-0.478</td>
+<td style="text-align: right;">0.224</td>
+<td style="text-align: left;">.477</td>
+</tr>
+<tr class="odd" data-grouplength="16">
+<td colspan="6" style="border-bottom: 1px solid"><strong>tau (log units)</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">(Intercept = Female, Angry, White face)</td>
+<td style="text-align: right;">-1.916</td>
+<td style="text-align: right;">-1.972</td>
+<td style="text-align: right;">-1.859</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male)</td>
+<td style="text-align: right;">-0.143</td>
+<td style="text-align: right;">-0.223</td>
+<td style="text-align: right;">-0.063</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Target Gender (male)</td>
+<td style="text-align: right;">-0.054</td>
+<td style="text-align: right;">-0.135</td>
+<td style="text-align: right;">0.028</td>
+<td style="text-align: left;">.195</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Target Emotion (happy)</td>
+<td style="text-align: right;">-0.190</td>
+<td style="text-align: right;">-0.271</td>
+<td style="text-align: right;">-0.109</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Target Race (black)</td>
+<td style="text-align: right;">-0.220</td>
+<td style="text-align: right;">-0.301</td>
+<td style="text-align: right;">-0.138</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male)</td>
+<td style="text-align: right;">0.052</td>
+<td style="text-align: right;">-0.063</td>
+<td style="text-align: right;">0.167</td>
+<td style="text-align: left;">.375</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">-0.068</td>
+<td style="text-align: right;">-0.182</td>
+<td style="text-align: right;">0.046</td>
+<td style="text-align: left;">.241</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Target Gender (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">0.236</td>
+<td style="text-align: right;">0.121</td>
+<td style="text-align: right;">0.351</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male) X Target Race (black)</td>
+<td style="text-align: right;">0.111</td>
+<td style="text-align: right;">-0.003</td>
+<td style="text-align: right;">0.225</td>
+<td style="text-align: left;">.057</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Target Gender (male) X Target Race (black)</td>
+<td style="text-align: right;">0.096</td>
+<td style="text-align: right;">-0.019</td>
+<td style="text-align: right;">0.211</td>
+<td style="text-align: left;">.103</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">0.224</td>
+<td style="text-align: right;">0.108</td>
+<td style="text-align: right;">0.340</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">0.025</td>
+<td style="text-align: right;">-0.137</td>
+<td style="text-align: right;">0.187</td>
+<td style="text-align: left;">.766</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Race (black)</td>
+<td style="text-align: right;">-0.262</td>
+<td style="text-align: right;">-0.425</td>
+<td style="text-align: right;">-0.100</td>
+<td style="text-align: left;">.002</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male) X Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">0.028</td>
+<td style="text-align: right;">-0.135</td>
+<td style="text-align: right;">0.191</td>
+<td style="text-align: left;">.735</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Target Gender (male) X Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">-0.323</td>
+<td style="text-align: right;">-0.488</td>
+<td style="text-align: right;">-0.159</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">0.083</td>
+<td style="text-align: right;">-0.148</td>
+<td style="text-align: right;">0.313</td>
+<td style="text-align: left;">.482</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="quantile-comparison" class="level3">
+<h3 class="anchored" data-anchor-id="quantile-comparison">Quantile Comparison</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><embed src="Expt1_Combined/gamlss/quantile_comparison.pdf" class="img-fluid"></p>
+<figcaption>Quantile comparison plot</figcaption>
+</figure>
+</div>
+<p>The quantile comparison plot shows predicted versus observed quantiles across the response time distribution. Points falling near the diagonal line indicate good model fit across the entire distribution.</p>
+</section>
+<section id="q-q-plot" class="level3">
+<h3 class="anchored" data-anchor-id="q-q-plot">Q-Q Plot</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><embed src="Expt1_Combined/gamlss/qq_plot.pdf" class="img-fluid"></p>
+<figcaption>Q-Q plot</figcaption>
+</figure>
+</div>
+<p>The quantile-quantile plot compares theoretical versus sample quantiles. Deviation from the diagonal line would indicate lack of fit; close alignment supports the ex-Gaussian distributional assumption.</p>
+</section>
+<section id="quantile-differences" class="level3">
+<h3 class="anchored" data-anchor-id="quantile-differences">Quantile Differences</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><embed src="Expt1_Combined/gamlss/quantile_differences.pdf" class="img-fluid"></p>
+<figcaption>Quantile differences plot</figcaption>
+</figure>
+</div>
+<p>This plot shows the difference between predicted and observed quantiles. Values near zero across all quantiles indicate unbiased predictions throughout the distribution.</p>
+</section>
+<section id="percent-error" class="level3">
+<h3 class="anchored" data-anchor-id="percent-error">Percent Error</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><embed src="Expt1_Combined/gamlss/percent_error.pdf" class="img-fluid"></p>
+<figcaption>Percent error plot</figcaption>
+</figure>
+</div>
+<p>The percent error plot displays relative prediction errors. Small percent errors (typically &lt;5%) across quantiles indicate good relative fit.</p>
+</section>
+<section id="actual-vs.-predicted" class="level3">
+<h3 class="anchored" data-anchor-id="actual-vs.-predicted">Actual vs.&nbsp;Predicted</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><embed src="Expt1_Combined/gamlss/actual_vs_predicted.pdf" class="img-fluid"></p>
+<figcaption>Actual vs.&nbsp;predicted overlay</figcaption>
+</figure>
+</div>
+<p>This overlay plot compares the observed density with predicted densities from the model. Close alignment indicates the ex-Gaussian distribution adequately captures the shape of the RT distribution.</p>
+</section>
+<section id="density-comparison" class="level3">
+<h3 class="anchored" data-anchor-id="density-comparison">Density Comparison</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><embed src="Expt1_Combined/gamlss/density_comparison.pdf" class="img-fluid"></p>
+<figcaption>Density comparison</figcaption>
+</figure>
+</div>
+<p>The density comparison plot provides an alternative visualization of observed versus predicted densities, with good overlap indicating appropriate distributional fit.</p>
+</section>
+<section id="conditional-quantiles" class="level3">
+<h3 class="anchored" data-anchor-id="conditional-quantiles">Conditional Quantiles</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><embed src="Expt1_Combined/gamlss/conditional_quantiles_TEmotion.pdf" class="img-fluid"></p>
+<figcaption>Conditional quantiles by subgroup</figcaption>
+</figure>
+</div>
+<p>Conditional quantile plots show model fit separately for each subgroup (e.g., by expression, face sex, participant gender). Consistent fit across subgroups indicates the model captures condition effects appropriately.</p>
+</section>
+</section>
+<section id="experiment-2-1" class="level2">
+<h2 class="anchored" data-anchor-id="experiment-2-1">Experiment 2</h2>
+<section id="fixed-effect-coefficients-4" class="level3">
+<h3 class="anchored" data-anchor-id="fixed-effect-coefficients-4">Fixed effect Coefficients</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table class="lightable-classic caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Parameter</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Term</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Estimate</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">CI-lower</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">CI-upper</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd" data-grouplength="32">
+<td colspan="6" style="border-bottom: 1px solid"><strong>mu (seconds)</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">(Intercept = Female, Angry, White face)</td>
+<td style="text-align: right;">0.468</td>
+<td style="text-align: right;">0.465</td>
+<td style="text-align: right;">0.472</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male)</td>
+<td style="text-align: right;">0.014</td>
+<td style="text-align: right;">0.009</td>
+<td style="text-align: right;">0.019</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Target Gender (male)</td>
+<td style="text-align: right;">-0.015</td>
+<td style="text-align: right;">-0.020</td>
+<td style="text-align: right;">-0.010</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Target Emotion (happy)</td>
+<td style="text-align: right;">-0.030</td>
+<td style="text-align: right;">-0.035</td>
+<td style="text-align: right;">-0.025</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Target Race (black)</td>
+<td style="text-align: right;">-0.006</td>
+<td style="text-align: right;">-0.011</td>
+<td style="text-align: right;">-0.002</td>
+<td style="text-align: left;">.007</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Race (black)</td>
+<td style="text-align: right;">-0.002</td>
+<td style="text-align: right;">-0.007</td>
+<td style="text-align: right;">0.003</td>
+<td style="text-align: left;">.401</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male)</td>
+<td style="text-align: right;">0.020</td>
+<td style="text-align: right;">0.013</td>
+<td style="text-align: right;">0.027</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">0.008</td>
+<td style="text-align: right;">0.002</td>
+<td style="text-align: right;">0.015</td>
+<td style="text-align: left;">.014</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Target Gender (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">0.027</td>
+<td style="text-align: right;">0.020</td>
+<td style="text-align: right;">0.033</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male) X Target Race (black)</td>
+<td style="text-align: right;">0.002</td>
+<td style="text-align: right;">-0.004</td>
+<td style="text-align: right;">0.009</td>
+<td style="text-align: left;">.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Target Gender (male) X Target Race (black)</td>
+<td style="text-align: right;">-0.006</td>
+<td style="text-align: right;">-0.012</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: left;">.058</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">0.025</td>
+<td style="text-align: right;">0.019</td>
+<td style="text-align: right;">0.031</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male) X Person Race (black)</td>
+<td style="text-align: right;">-0.003</td>
+<td style="text-align: right;">-0.010</td>
+<td style="text-align: right;">0.004</td>
+<td style="text-align: left;">.427</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Target Gender (male) X Person Race (black)</td>
+<td style="text-align: right;">0.014</td>
+<td style="text-align: right;">0.007</td>
+<td style="text-align: right;">0.021</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">0.012</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">0.018</td>
+<td style="text-align: left;">.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">0.010</td>
+<td style="text-align: right;">0.003</td>
+<td style="text-align: right;">0.017</td>
+<td style="text-align: left;">.004</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">-0.026</td>
+<td style="text-align: right;">-0.035</td>
+<td style="text-align: right;">-0.017</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Race (black)</td>
+<td style="text-align: right;">0.004</td>
+<td style="text-align: right;">-0.005</td>
+<td style="text-align: right;">0.013</td>
+<td style="text-align: left;">.44</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male) X Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">-0.012</td>
+<td style="text-align: right;">-0.021</td>
+<td style="text-align: right;">-0.003</td>
+<td style="text-align: left;">.01</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Target Gender (male) X Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">-0.010</td>
+<td style="text-align: right;">-0.019</td>
+<td style="text-align: right;">-0.001</td>
+<td style="text-align: left;">.029</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Person Race (black)</td>
+<td style="text-align: right;">-0.016</td>
+<td style="text-align: right;">-0.026</td>
+<td style="text-align: right;">-0.007</td>
+<td style="text-align: left;">.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male) X Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">-0.014</td>
+<td style="text-align: right;">-0.024</td>
+<td style="text-align: right;">-0.005</td>
+<td style="text-align: left;">.003</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Target Gender (male) X Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">-0.013</td>
+<td style="text-align: right;">-0.022</td>
+<td style="text-align: right;">-0.004</td>
+<td style="text-align: left;">.007</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">-0.001</td>
+<td style="text-align: right;">-0.010</td>
+<td style="text-align: right;">0.009</td>
+<td style="text-align: left;">.916</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Target Gender (male) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">0.002</td>
+<td style="text-align: right;">-0.007</td>
+<td style="text-align: right;">0.011</td>
+<td style="text-align: left;">.695</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Target Emotion (happy) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">-0.027</td>
+<td style="text-align: right;">-0.036</td>
+<td style="text-align: right;">-0.018</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">0.013</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">0.025</td>
+<td style="text-align: left;">.047</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">0.013</td>
+<td style="text-align: right;">-0.001</td>
+<td style="text-align: right;">0.026</td>
+<td style="text-align: left;">.061</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">-0.010</td>
+<td style="text-align: right;">-0.023</td>
+<td style="text-align: right;">0.003</td>
+<td style="text-align: left;">.132</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male) X Target Emotion (happy) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">0.026</td>
+<td style="text-align: right;">0.013</td>
+<td style="text-align: right;">0.039</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Target Gender (male) X Target Emotion (happy) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">0.009</td>
+<td style="text-align: right;">-0.004</td>
+<td style="text-align: right;">0.022</td>
+<td style="text-align: left;">.166</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Emotion (happy) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">-0.020</td>
+<td style="text-align: right;">-0.038</td>
+<td style="text-align: right;">-0.002</td>
+<td style="text-align: left;">.031</td>
+</tr>
+<tr class="even" data-grouplength="32">
+<td colspan="6" style="border-bottom: 1px solid"><strong>sigma (log units)</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">(Intercept = Female, Angry, White face)</td>
+<td style="text-align: right;">-2.537</td>
+<td style="text-align: right;">-2.608</td>
+<td style="text-align: right;">-2.466</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male)</td>
+<td style="text-align: right;">-0.042</td>
+<td style="text-align: right;">-0.143</td>
+<td style="text-align: right;">0.060</td>
+<td style="text-align: left;">.42</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Target Gender (male)</td>
+<td style="text-align: right;">-0.102</td>
+<td style="text-align: right;">-0.205</td>
+<td style="text-align: right;">0.002</td>
+<td style="text-align: left;">.054</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Target Emotion (happy)</td>
+<td style="text-align: right;">-0.097</td>
+<td style="text-align: right;">-0.193</td>
+<td style="text-align: right;">-0.001</td>
+<td style="text-align: left;">.048</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Target Race (black)</td>
+<td style="text-align: right;">-0.185</td>
+<td style="text-align: right;">-0.284</td>
+<td style="text-align: right;">-0.086</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Race (black)</td>
+<td style="text-align: right;">0.001</td>
+<td style="text-align: right;">-0.106</td>
+<td style="text-align: right;">0.109</td>
+<td style="text-align: left;">.983</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male)</td>
+<td style="text-align: right;">0.030</td>
+<td style="text-align: right;">-0.116</td>
+<td style="text-align: right;">0.175</td>
+<td style="text-align: left;">.688</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">0.061</td>
+<td style="text-align: right;">-0.075</td>
+<td style="text-align: right;">0.198</td>
+<td style="text-align: left;">.38</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Target Gender (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">0.103</td>
+<td style="text-align: right;">-0.039</td>
+<td style="text-align: right;">0.244</td>
+<td style="text-align: left;">.155</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male) X Target Race (black)</td>
+<td style="text-align: right;">0.023</td>
+<td style="text-align: right;">-0.118</td>
+<td style="text-align: right;">0.165</td>
+<td style="text-align: left;">.747</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Target Gender (male) X Target Race (black)</td>
+<td style="text-align: right;">0.018</td>
+<td style="text-align: right;">-0.128</td>
+<td style="text-align: right;">0.165</td>
+<td style="text-align: left;">.804</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">0.337</td>
+<td style="text-align: right;">0.204</td>
+<td style="text-align: right;">0.470</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male) X Person Race (black)</td>
+<td style="text-align: right;">-0.110</td>
+<td style="text-align: right;">-0.259</td>
+<td style="text-align: right;">0.039</td>
+<td style="text-align: left;">.147</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Target Gender (male) X Person Race (black)</td>
+<td style="text-align: right;">-0.023</td>
+<td style="text-align: right;">-0.173</td>
+<td style="text-align: right;">0.127</td>
+<td style="text-align: left;">.759</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">-0.008</td>
+<td style="text-align: right;">-0.151</td>
+<td style="text-align: right;">0.136</td>
+<td style="text-align: left;">.915</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">0.155</td>
+<td style="text-align: right;">0.008</td>
+<td style="text-align: right;">0.303</td>
+<td style="text-align: left;">.039</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">-0.048</td>
+<td style="text-align: right;">-0.246</td>
+<td style="text-align: right;">0.151</td>
+<td style="text-align: left;">.638</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Race (black)</td>
+<td style="text-align: right;">0.114</td>
+<td style="text-align: right;">-0.088</td>
+<td style="text-align: right;">0.317</td>
+<td style="text-align: left;">.269</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male) X Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">-0.250</td>
+<td style="text-align: right;">-0.442</td>
+<td style="text-align: right;">-0.058</td>
+<td style="text-align: left;">.011</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Target Gender (male) X Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">-0.192</td>
+<td style="text-align: right;">0.203</td>
+<td style="text-align: left;">.957</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Person Race (black)</td>
+<td style="text-align: right;">0.114</td>
+<td style="text-align: right;">-0.097</td>
+<td style="text-align: right;">0.325</td>
+<td style="text-align: left;">.289</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male) X Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">0.145</td>
+<td style="text-align: right;">-0.058</td>
+<td style="text-align: right;">0.347</td>
+<td style="text-align: left;">.161</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Target Gender (male) X Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">0.080</td>
+<td style="text-align: right;">-0.126</td>
+<td style="text-align: right;">0.286</td>
+<td style="text-align: left;">.444</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">0.107</td>
+<td style="text-align: right;">-0.099</td>
+<td style="text-align: right;">0.313</td>
+<td style="text-align: left;">.307</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Target Gender (male) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">0.082</td>
+<td style="text-align: right;">-0.127</td>
+<td style="text-align: right;">0.290</td>
+<td style="text-align: left;">.444</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Target Emotion (happy) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">-0.382</td>
+<td style="text-align: right;">-0.583</td>
+<td style="text-align: right;">-0.181</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">0.067</td>
+<td style="text-align: right;">-0.208</td>
+<td style="text-align: right;">0.342</td>
+<td style="text-align: left;">.634</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">-0.162</td>
+<td style="text-align: right;">-0.453</td>
+<td style="text-align: right;">0.128</td>
+<td style="text-align: left;">.273</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">-0.327</td>
+<td style="text-align: right;">-0.618</td>
+<td style="text-align: right;">-0.036</td>
+<td style="text-align: left;">.028</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male) X Target Emotion (happy) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">0.263</td>
+<td style="text-align: right;">-0.018</td>
+<td style="text-align: right;">0.545</td>
+<td style="text-align: left;">.066</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Target Gender (male) X Target Emotion (happy) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">-0.014</td>
+<td style="text-align: right;">-0.300</td>
+<td style="text-align: right;">0.272</td>
+<td style="text-align: left;">.922</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Emotion (happy) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">-0.076</td>
+<td style="text-align: right;">-0.476</td>
+<td style="text-align: right;">0.324</td>
+<td style="text-align: left;">.71</td>
+</tr>
+<tr class="odd" data-grouplength="32">
+<td colspan="6" style="border-bottom: 1px solid"><strong>tau (log units)</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">(Intercept = Female, Angry, White face)</td>
+<td style="text-align: right;">-2.025</td>
+<td style="text-align: right;">-2.071</td>
+<td style="text-align: right;">-1.978</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male)</td>
+<td style="text-align: right;">0.074</td>
+<td style="text-align: right;">0.008</td>
+<td style="text-align: right;">0.140</td>
+<td style="text-align: left;">.028</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Target Gender (male)</td>
+<td style="text-align: right;">-0.041</td>
+<td style="text-align: right;">-0.108</td>
+<td style="text-align: right;">0.027</td>
+<td style="text-align: left;">.238</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Target Emotion (happy)</td>
+<td style="text-align: right;">-0.221</td>
+<td style="text-align: right;">-0.287</td>
+<td style="text-align: right;">-0.155</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Target Race (black)</td>
+<td style="text-align: right;">-0.195</td>
+<td style="text-align: right;">-0.261</td>
+<td style="text-align: right;">-0.128</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Race (black)</td>
+<td style="text-align: right;">0.097</td>
+<td style="text-align: right;">0.031</td>
+<td style="text-align: right;">0.164</td>
+<td style="text-align: left;">.004</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male)</td>
+<td style="text-align: right;">0.066</td>
+<td style="text-align: right;">-0.029</td>
+<td style="text-align: right;">0.160</td>
+<td style="text-align: left;">.174</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">-0.031</td>
+<td style="text-align: right;">-0.125</td>
+<td style="text-align: right;">0.063</td>
+<td style="text-align: left;">.52</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Target Gender (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">0.199</td>
+<td style="text-align: right;">0.104</td>
+<td style="text-align: right;">0.294</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male) X Target Race (black)</td>
+<td style="text-align: right;">0.036</td>
+<td style="text-align: right;">-0.058</td>
+<td style="text-align: right;">0.130</td>
+<td style="text-align: left;">.458</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Target Gender (male) X Target Race (black)</td>
+<td style="text-align: right;">0.136</td>
+<td style="text-align: right;">0.042</td>
+<td style="text-align: right;">0.229</td>
+<td style="text-align: left;">.004</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">0.072</td>
+<td style="text-align: right;">-0.024</td>
+<td style="text-align: right;">0.168</td>
+<td style="text-align: left;">.142</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male) X Person Race (black)</td>
+<td style="text-align: right;">-0.049</td>
+<td style="text-align: right;">-0.143</td>
+<td style="text-align: right;">0.045</td>
+<td style="text-align: left;">.306</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Target Gender (male) X Person Race (black)</td>
+<td style="text-align: right;">0.016</td>
+<td style="text-align: right;">-0.078</td>
+<td style="text-align: right;">0.110</td>
+<td style="text-align: left;">.743</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">-0.034</td>
+<td style="text-align: right;">-0.129</td>
+<td style="text-align: right;">0.060</td>
+<td style="text-align: left;">.476</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">0.094</td>
+<td style="text-align: right;">-0.001</td>
+<td style="text-align: right;">0.189</td>
+<td style="text-align: left;">.052</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">-0.081</td>
+<td style="text-align: right;">-0.215</td>
+<td style="text-align: right;">0.053</td>
+<td style="text-align: left;">.236</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Race (black)</td>
+<td style="text-align: right;">-0.221</td>
+<td style="text-align: right;">-0.353</td>
+<td style="text-align: right;">-0.089</td>
+<td style="text-align: left;">.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male) X Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">0.198</td>
+<td style="text-align: right;">0.063</td>
+<td style="text-align: right;">0.333</td>
+<td style="text-align: left;">.004</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Target Gender (male) X Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">-0.154</td>
+<td style="text-align: right;">-0.290</td>
+<td style="text-align: right;">-0.019</td>
+<td style="text-align: left;">.026</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Person Race (black)</td>
+<td style="text-align: right;">-0.062</td>
+<td style="text-align: right;">-0.195</td>
+<td style="text-align: right;">0.070</td>
+<td style="text-align: left;">.357</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male) X Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">0.090</td>
+<td style="text-align: right;">-0.043</td>
+<td style="text-align: right;">0.223</td>
+<td style="text-align: left;">.183</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Target Gender (male) X Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">-0.018</td>
+<td style="text-align: right;">-0.152</td>
+<td style="text-align: right;">0.116</td>
+<td style="text-align: left;">.789</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">-0.092</td>
+<td style="text-align: right;">-0.225</td>
+<td style="text-align: right;">0.042</td>
+<td style="text-align: left;">.178</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Target Gender (male) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">-0.182</td>
+<td style="text-align: right;">-0.315</td>
+<td style="text-align: right;">-0.049</td>
+<td style="text-align: left;">.007</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Target Emotion (happy) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">0.057</td>
+<td style="text-align: right;">-0.078</td>
+<td style="text-align: right;">0.193</td>
+<td style="text-align: left;">.407</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">-0.131</td>
+<td style="text-align: right;">-0.322</td>
+<td style="text-align: right;">0.061</td>
+<td style="text-align: left;">.181</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">-0.030</td>
+<td style="text-align: right;">-0.219</td>
+<td style="text-align: right;">0.159</td>
+<td style="text-align: left;">.756</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">0.337</td>
+<td style="text-align: right;">0.151</td>
+<td style="text-align: right;">0.524</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male) X Target Emotion (happy) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">-0.368</td>
+<td style="text-align: right;">-0.559</td>
+<td style="text-align: right;">-0.176</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Target Gender (male) X Target Emotion (happy) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">0.035</td>
+<td style="text-align: right;">-0.157</td>
+<td style="text-align: right;">0.227</td>
+<td style="text-align: left;">.72</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Emotion (happy) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">0.247</td>
+<td style="text-align: right;">-0.023</td>
+<td style="text-align: right;">0.517</td>
+<td style="text-align: left;">.073</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="quantile-comparison-1" class="level3">
+<h3 class="anchored" data-anchor-id="quantile-comparison-1">Quantile Comparison</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><embed src="Expt2_Combined/gamlss/quantile_comparison.pdf" class="img-fluid"></p>
+<figcaption>Quantile comparison plot</figcaption>
+</figure>
+</div>
+<p>As in Experiment 1, points fall near the diagonal line, indicating good model fit.</p>
+</section>
+<section id="q-q-plot-1" class="level3">
+<h3 class="anchored" data-anchor-id="q-q-plot-1">Q-Q Plot</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><embed src="Expt2_Combined/gamlss/qq_plot.pdf" class="img-fluid"></p>
+<figcaption>Q-Q plot</figcaption>
+</figure>
+</div>
+<p>The Q-Q plot shows close alignment between theoretical and sample quantiles.</p>
+</section>
+<section id="quantile-differences-1" class="level3">
+<h3 class="anchored" data-anchor-id="quantile-differences-1">Quantile Differences</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><embed src="Expt2_Combined/gamlss/quantile_differences.pdf" class="img-fluid"></p>
+<figcaption>Quantile differences plot</figcaption>
+</figure>
+</div>
+<p>Differences between predicted and observed quantiles are near zero across the distribution.</p>
+</section>
+<section id="percent-error-1" class="level3">
+<h3 class="anchored" data-anchor-id="percent-error-1">Percent Error</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><embed src="Expt2_Combined/gamlss/percent_error.pdf" class="img-fluid"></p>
+<figcaption>Percent error plot</figcaption>
+</figure>
+</div>
+<p>Percent errors are small, indicating good relative fit.</p>
+</section>
+<section id="actual-vs.-predicted-1" class="level3">
+<h3 class="anchored" data-anchor-id="actual-vs.-predicted-1">Actual vs.&nbsp;Predicted</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><embed src="Expt2_Combined/gamlss/actual_vs_predicted.pdf" class="img-fluid"></p>
+<figcaption>Actual vs.&nbsp;predicted overlay</figcaption>
+</figure>
+</div>
+<p>Observed and predicted densities show close alignment.</p>
+</section>
+<section id="density-comparison-1" class="level3">
+<h3 class="anchored" data-anchor-id="density-comparison-1">Density Comparison</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><embed src="Expt2_Combined/gamlss/density_comparison.pdf" class="img-fluid"></p>
+<figcaption>Density comparison</figcaption>
+</figure>
+</div>
+<p>The density comparison confirms appropriate distributional fit.</p>
+</section>
+<section id="conditional-quantiles-1" class="level3">
+<h3 class="anchored" data-anchor-id="conditional-quantiles-1">Conditional Quantiles</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><embed src="Expt2_Combined/gamlss/conditional_quantiles_PersonRace.pdf" class="img-fluid"></p>
+<figcaption>Conditional quantiles by subgroup</figcaption>
+</figure>
+</div>
+<p>Conditional quantile plots show consistent fit across all subgroups.</p>
+</section>
+</section>
+<section id="experiment-3-1" class="level2">
+<h2 class="anchored" data-anchor-id="experiment-3-1">Experiment 3</h2>
+<section id="fixed-effect-coefficients-5" class="level3">
+<h3 class="anchored" data-anchor-id="fixed-effect-coefficients-5">Fixed effect Coefficients</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table class="lightable-classic caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Parameter</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Term</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Estimate</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">CI-lower</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">CI-upper</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd" data-grouplength="32">
+<td colspan="6" style="border-bottom: 1px solid"><strong>mu (seconds)</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">(Intercept = Female, Angry, White face)</td>
+<td style="text-align: right;">0.446</td>
+<td style="text-align: right;">0.442</td>
+<td style="text-align: right;">0.450</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male)</td>
+<td style="text-align: right;">0.004</td>
+<td style="text-align: right;">-0.002</td>
+<td style="text-align: right;">0.009</td>
+<td style="text-align: left;">.163</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Target Gender (male)</td>
+<td style="text-align: right;">0.018</td>
+<td style="text-align: right;">0.012</td>
+<td style="text-align: right;">0.023</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Target Emotion (happy)</td>
+<td style="text-align: right;">-0.016</td>
+<td style="text-align: right;">-0.021</td>
+<td style="text-align: right;">-0.010</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Target Race (black)</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">0.009</td>
+<td style="text-align: left;">.072</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Race (black)</td>
+<td style="text-align: right;">0.021</td>
+<td style="text-align: right;">0.015</td>
+<td style="text-align: right;">0.026</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male)</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">-0.002</td>
+<td style="text-align: right;">0.013</td>
+<td style="text-align: left;">.156</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">0.004</td>
+<td style="text-align: right;">-0.003</td>
+<td style="text-align: right;">0.012</td>
+<td style="text-align: left;">.242</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Target Gender (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">-0.004</td>
+<td style="text-align: right;">-0.011</td>
+<td style="text-align: right;">0.003</td>
+<td style="text-align: left;">.266</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male) X Target Race (black)</td>
+<td style="text-align: right;">0.008</td>
+<td style="text-align: right;">0.001</td>
+<td style="text-align: right;">0.016</td>
+<td style="text-align: left;">.022</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Target Gender (male) X Target Race (black)</td>
+<td style="text-align: right;">-0.020</td>
+<td style="text-align: right;">-0.027</td>
+<td style="text-align: right;">-0.013</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">-0.003</td>
+<td style="text-align: right;">-0.010</td>
+<td style="text-align: right;">0.004</td>
+<td style="text-align: left;">.429</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male) X Person Race (black)</td>
+<td style="text-align: right;">0.015</td>
+<td style="text-align: right;">0.007</td>
+<td style="text-align: right;">0.023</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Target Gender (male) X Person Race (black)</td>
+<td style="text-align: right;">-0.004</td>
+<td style="text-align: right;">-0.012</td>
+<td style="text-align: right;">0.004</td>
+<td style="text-align: left;">.35</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">-0.008</td>
+<td style="text-align: right;">-0.015</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: left;">.052</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">0.008</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">0.015</td>
+<td style="text-align: left;">.057</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">-0.004</td>
+<td style="text-align: right;">-0.015</td>
+<td style="text-align: right;">0.006</td>
+<td style="text-align: left;">.432</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Race (black)</td>
+<td style="text-align: right;">0.003</td>
+<td style="text-align: right;">-0.007</td>
+<td style="text-align: right;">0.014</td>
+<td style="text-align: left;">.531</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male) X Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">0.007</td>
+<td style="text-align: right;">-0.003</td>
+<td style="text-align: right;">0.017</td>
+<td style="text-align: left;">.189</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Target Gender (male) X Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">0.006</td>
+<td style="text-align: right;">-0.004</td>
+<td style="text-align: right;">0.016</td>
+<td style="text-align: left;">.214</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Person Race (black)</td>
+<td style="text-align: right;">-0.007</td>
+<td style="text-align: right;">-0.018</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: left;">.256</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male) X Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">-0.001</td>
+<td style="text-align: right;">-0.012</td>
+<td style="text-align: right;">0.010</td>
+<td style="text-align: left;">.889</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Target Gender (male) X Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">0.013</td>
+<td style="text-align: right;">0.002</td>
+<td style="text-align: right;">0.024</td>
+<td style="text-align: left;">.019</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">-0.014</td>
+<td style="text-align: right;">-0.026</td>
+<td style="text-align: right;">-0.003</td>
+<td style="text-align: left;">.012</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Target Gender (male) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">0.002</td>
+<td style="text-align: right;">-0.009</td>
+<td style="text-align: right;">0.013</td>
+<td style="text-align: left;">.727</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Target Emotion (happy) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">0.012</td>
+<td style="text-align: right;">0.001</td>
+<td style="text-align: right;">0.023</td>
+<td style="text-align: left;">.028</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">-0.013</td>
+<td style="text-align: right;">-0.027</td>
+<td style="text-align: right;">0.002</td>
+<td style="text-align: left;">.09</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">-0.002</td>
+<td style="text-align: right;">-0.018</td>
+<td style="text-align: right;">0.014</td>
+<td style="text-align: left;">.779</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">-0.004</td>
+<td style="text-align: right;">-0.020</td>
+<td style="text-align: right;">0.012</td>
+<td style="text-align: left;">.625</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male) X Target Emotion (happy) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">-0.010</td>
+<td style="text-align: right;">-0.026</td>
+<td style="text-align: right;">0.006</td>
+<td style="text-align: left;">.217</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Target Gender (male) X Target Emotion (happy) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">-0.025</td>
+<td style="text-align: right;">-0.040</td>
+<td style="text-align: right;">-0.009</td>
+<td style="text-align: left;">.002</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Emotion (happy) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">0.019</td>
+<td style="text-align: right;">-0.003</td>
+<td style="text-align: right;">0.041</td>
+<td style="text-align: left;">.091</td>
+</tr>
+<tr class="even" data-grouplength="32">
+<td colspan="6" style="border-bottom: 1px solid"><strong>sigma (log units)</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">(Intercept = Female, Angry, White face)</td>
+<td style="text-align: right;">-2.781</td>
+<td style="text-align: right;">-2.864</td>
+<td style="text-align: right;">-2.698</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male)</td>
+<td style="text-align: right;">-0.016</td>
+<td style="text-align: right;">-0.136</td>
+<td style="text-align: right;">0.103</td>
+<td style="text-align: left;">.791</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Target Gender (male)</td>
+<td style="text-align: right;">0.139</td>
+<td style="text-align: right;">0.021</td>
+<td style="text-align: right;">0.256</td>
+<td style="text-align: left;">.021</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Target Emotion (happy)</td>
+<td style="text-align: right;">-0.019</td>
+<td style="text-align: right;">-0.138</td>
+<td style="text-align: right;">0.100</td>
+<td style="text-align: left;">.753</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Target Race (black)</td>
+<td style="text-align: right;">-0.127</td>
+<td style="text-align: right;">-0.248</td>
+<td style="text-align: right;">-0.005</td>
+<td style="text-align: left;">.041</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Race (black)</td>
+<td style="text-align: right;">0.100</td>
+<td style="text-align: right;">-0.020</td>
+<td style="text-align: right;">0.220</td>
+<td style="text-align: left;">.104</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male)</td>
+<td style="text-align: right;">-0.087</td>
+<td style="text-align: right;">-0.252</td>
+<td style="text-align: right;">0.077</td>
+<td style="text-align: left;">.299</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">0.115</td>
+<td style="text-align: right;">-0.052</td>
+<td style="text-align: right;">0.283</td>
+<td style="text-align: left;">.178</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Target Gender (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">-0.135</td>
+<td style="text-align: right;">-0.305</td>
+<td style="text-align: right;">0.035</td>
+<td style="text-align: left;">.12</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male) X Target Race (black)</td>
+<td style="text-align: right;">0.231</td>
+<td style="text-align: right;">0.059</td>
+<td style="text-align: right;">0.403</td>
+<td style="text-align: left;">.008</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Target Gender (male) X Target Race (black)</td>
+<td style="text-align: right;">-0.141</td>
+<td style="text-align: right;">-0.318</td>
+<td style="text-align: right;">0.036</td>
+<td style="text-align: left;">.119</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">0.208</td>
+<td style="text-align: right;">0.039</td>
+<td style="text-align: right;">0.377</td>
+<td style="text-align: left;">.016</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male) X Person Race (black)</td>
+<td style="text-align: right;">0.044</td>
+<td style="text-align: right;">-0.125</td>
+<td style="text-align: right;">0.212</td>
+<td style="text-align: left;">.613</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Target Gender (male) X Person Race (black)</td>
+<td style="text-align: right;">-0.067</td>
+<td style="text-align: right;">-0.239</td>
+<td style="text-align: right;">0.104</td>
+<td style="text-align: left;">.442</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">-0.125</td>
+<td style="text-align: right;">-0.305</td>
+<td style="text-align: right;">0.056</td>
+<td style="text-align: left;">.176</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">0.097</td>
+<td style="text-align: right;">-0.079</td>
+<td style="text-align: right;">0.272</td>
+<td style="text-align: left;">.28</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">0.074</td>
+<td style="text-align: right;">-0.161</td>
+<td style="text-align: right;">0.309</td>
+<td style="text-align: left;">.538</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Race (black)</td>
+<td style="text-align: right;">0.041</td>
+<td style="text-align: right;">-0.202</td>
+<td style="text-align: right;">0.283</td>
+<td style="text-align: left;">.743</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male) X Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">-0.271</td>
+<td style="text-align: right;">-0.506</td>
+<td style="text-align: right;">-0.036</td>
+<td style="text-align: left;">.024</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Target Gender (male) X Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">0.114</td>
+<td style="text-align: right;">-0.131</td>
+<td style="text-align: right;">0.359</td>
+<td style="text-align: left;">.363</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Person Race (black)</td>
+<td style="text-align: right;">-0.069</td>
+<td style="text-align: right;">-0.312</td>
+<td style="text-align: right;">0.174</td>
+<td style="text-align: left;">.578</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male) X Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">0.151</td>
+<td style="text-align: right;">-0.093</td>
+<td style="text-align: right;">0.395</td>
+<td style="text-align: left;">.224</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Target Gender (male) X Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">0.149</td>
+<td style="text-align: right;">-0.106</td>
+<td style="text-align: right;">0.403</td>
+<td style="text-align: left;">.253</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">-0.156</td>
+<td style="text-align: right;">-0.398</td>
+<td style="text-align: right;">0.085</td>
+<td style="text-align: left;">.204</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Target Gender (male) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">-0.021</td>
+<td style="text-align: right;">-0.276</td>
+<td style="text-align: right;">0.233</td>
+<td style="text-align: left;">.869</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Target Emotion (happy) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">-0.074</td>
+<td style="text-align: right;">-0.324</td>
+<td style="text-align: right;">0.177</td>
+<td style="text-align: left;">.564</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">-0.050</td>
+<td style="text-align: right;">-0.385</td>
+<td style="text-align: right;">0.285</td>
+<td style="text-align: left;">.77</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">-0.079</td>
+<td style="text-align: right;">-0.430</td>
+<td style="text-align: right;">0.272</td>
+<td style="text-align: left;">.66</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">0.013</td>
+<td style="text-align: right;">-0.340</td>
+<td style="text-align: right;">0.366</td>
+<td style="text-align: left;">.942</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male) X Target Emotion (happy) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">0.059</td>
+<td style="text-align: right;">-0.281</td>
+<td style="text-align: right;">0.398</td>
+<td style="text-align: left;">.734</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Target Gender (male) X Target Emotion (happy) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">-0.031</td>
+<td style="text-align: right;">-0.391</td>
+<td style="text-align: right;">0.330</td>
+<td style="text-align: left;">.868</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">sigma</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Emotion (happy) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">0.035</td>
+<td style="text-align: right;">-0.460</td>
+<td style="text-align: right;">0.530</td>
+<td style="text-align: left;">.89</td>
+</tr>
+<tr class="odd" data-grouplength="32">
+<td colspan="6" style="border-bottom: 1px solid"><strong>tau (log units)</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">(Intercept = Female, Angry, White face)</td>
+<td style="text-align: right;">-2.106</td>
+<td style="text-align: right;">-2.162</td>
+<td style="text-align: right;">-2.050</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male)</td>
+<td style="text-align: right;">0.043</td>
+<td style="text-align: right;">-0.035</td>
+<td style="text-align: right;">0.121</td>
+<td style="text-align: left;">.277</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Target Gender (male)</td>
+<td style="text-align: right;">-0.085</td>
+<td style="text-align: right;">-0.166</td>
+<td style="text-align: right;">-0.005</td>
+<td style="text-align: left;">.037</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Target Emotion (happy)</td>
+<td style="text-align: right;">-0.083</td>
+<td style="text-align: right;">-0.163</td>
+<td style="text-align: right;">-0.004</td>
+<td style="text-align: left;">.039</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Target Race (black)</td>
+<td style="text-align: right;">-0.058</td>
+<td style="text-align: right;">-0.135</td>
+<td style="text-align: right;">0.019</td>
+<td style="text-align: left;">.139</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Race (black)</td>
+<td style="text-align: right;">0.173</td>
+<td style="text-align: right;">0.093</td>
+<td style="text-align: right;">0.252</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male)</td>
+<td style="text-align: right;">-0.039</td>
+<td style="text-align: right;">-0.150</td>
+<td style="text-align: right;">0.072</td>
+<td style="text-align: left;">.493</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">-0.088</td>
+<td style="text-align: right;">-0.200</td>
+<td style="text-align: right;">0.024</td>
+<td style="text-align: left;">.122</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Target Gender (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">0.128</td>
+<td style="text-align: right;">0.015</td>
+<td style="text-align: right;">0.241</td>
+<td style="text-align: left;">.026</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male) X Target Race (black)</td>
+<td style="text-align: right;">-0.072</td>
+<td style="text-align: right;">-0.182</td>
+<td style="text-align: right;">0.038</td>
+<td style="text-align: left;">.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Target Gender (male) X Target Race (black)</td>
+<td style="text-align: right;">0.211</td>
+<td style="text-align: right;">0.102</td>
+<td style="text-align: right;">0.321</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">-0.022</td>
+<td style="text-align: right;">-0.134</td>
+<td style="text-align: right;">0.089</td>
+<td style="text-align: left;">.694</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male) X Person Race (black)</td>
+<td style="text-align: right;">-0.065</td>
+<td style="text-align: right;">-0.176</td>
+<td style="text-align: right;">0.047</td>
+<td style="text-align: left;">.255</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Target Gender (male) X Person Race (black)</td>
+<td style="text-align: right;">0.101</td>
+<td style="text-align: right;">-0.013</td>
+<td style="text-align: right;">0.214</td>
+<td style="text-align: left;">.083</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">0.010</td>
+<td style="text-align: right;">-0.102</td>
+<td style="text-align: right;">0.122</td>
+<td style="text-align: left;">.862</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">0.076</td>
+<td style="text-align: right;">-0.035</td>
+<td style="text-align: right;">0.188</td>
+<td style="text-align: left;">.179</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Emotion (happy)</td>
+<td style="text-align: right;">0.099</td>
+<td style="text-align: right;">-0.060</td>
+<td style="text-align: right;">0.258</td>
+<td style="text-align: left;">.224</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Race (black)</td>
+<td style="text-align: right;">-0.077</td>
+<td style="text-align: right;">-0.233</td>
+<td style="text-align: right;">0.079</td>
+<td style="text-align: left;">.335</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male) X Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">0.063</td>
+<td style="text-align: right;">-0.097</td>
+<td style="text-align: right;">0.222</td>
+<td style="text-align: left;">.442</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Target Gender (male) X Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">-0.320</td>
+<td style="text-align: right;">-0.478</td>
+<td style="text-align: right;">-0.161</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Person Race (black)</td>
+<td style="text-align: right;">0.073</td>
+<td style="text-align: right;">-0.087</td>
+<td style="text-align: right;">0.233</td>
+<td style="text-align: left;">.37</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male) X Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">0.051</td>
+<td style="text-align: right;">-0.108</td>
+<td style="text-align: right;">0.211</td>
+<td style="text-align: left;">.528</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Target Gender (male) X Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">-0.016</td>
+<td style="text-align: right;">-0.176</td>
+<td style="text-align: right;">0.144</td>
+<td style="text-align: left;">.843</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">0.065</td>
+<td style="text-align: right;">-0.093</td>
+<td style="text-align: right;">0.224</td>
+<td style="text-align: left;">.419</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Target Gender (male) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">-0.339</td>
+<td style="text-align: right;">-0.497</td>
+<td style="text-align: right;">-0.181</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Target Emotion (happy) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">-0.038</td>
+<td style="text-align: right;">-0.196</td>
+<td style="text-align: right;">0.121</td>
+<td style="text-align: left;">.642</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Emotion (happy) X Target Race (black)</td>
+<td style="text-align: right;">0.117</td>
+<td style="text-align: right;">-0.109</td>
+<td style="text-align: right;">0.343</td>
+<td style="text-align: left;">.312</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Emotion (happy) X Person Race (black)</td>
+<td style="text-align: right;">-0.064</td>
+<td style="text-align: right;">-0.292</td>
+<td style="text-align: right;">0.163</td>
+<td style="text-align: left;">.58</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">0.097</td>
+<td style="text-align: right;">-0.128</td>
+<td style="text-align: right;">0.323</td>
+<td style="text-align: left;">.399</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male) X Target Emotion (happy) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">-0.051</td>
+<td style="text-align: right;">-0.279</td>
+<td style="text-align: right;">0.177</td>
+<td style="text-align: left;">.659</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Target Gender (male) X Target Emotion (happy) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">0.294</td>
+<td style="text-align: right;">0.068</td>
+<td style="text-align: right;">0.519</td>
+<td style="text-align: left;">.011</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">nu</td>
+<td style="text-align: left;">Person Sex (male) X Target Gender (male) X Target Emotion (happy) X Target Race (black) X Person Race (black)</td>
+<td style="text-align: right;">-0.191</td>
+<td style="text-align: right;">-0.513</td>
+<td style="text-align: right;">0.132</td>
+<td style="text-align: left;">.246</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="quantile-comparison-2" class="level3">
+<h3 class="anchored" data-anchor-id="quantile-comparison-2">Quantile Comparison</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><embed src="Expt3_Combined/gamlss/quantile_comparison.pdf" class="img-fluid"></p>
+<figcaption>Quantile comparison plot</figcaption>
+</figure>
+</div>
+<p>Good alignment between predicted and observed quantiles is observed.</p>
+</section>
+<section id="q-q-plot-2" class="level3">
+<h3 class="anchored" data-anchor-id="q-q-plot-2">Q-Q Plot</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><embed src="Expt3_Combined/gamlss/qq_plot.pdf" class="img-fluid"></p>
+<figcaption>Q-Q plot</figcaption>
+</figure>
+</div>
+<p>The Q-Q plot supports the ex-Gaussian distributional assumption.</p>
+</section>
+<section id="quantile-differences-2" class="level3">
+<h3 class="anchored" data-anchor-id="quantile-differences-2">Quantile Differences</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><embed src="Expt3_Combined/gamlss/quantile_differences.pdf" class="img-fluid"></p>
+<figcaption>Quantile differences plot</figcaption>
+</figure>
+</div>
+<p>Quantile differences are near zero across the distribution.</p>
+</section>
+<section id="percent-error-2" class="level3">
+<h3 class="anchored" data-anchor-id="percent-error-2">Percent Error</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><embed src="Expt3_Combined/gamlss/percent_error.pdf" class="img-fluid"></p>
+<figcaption>Percent error plot</figcaption>
+</figure>
+</div>
+<p>Percent errors remain small, indicating good fit.</p>
+</section>
+<section id="actual-vs.-predicted-2" class="level3">
+<h3 class="anchored" data-anchor-id="actual-vs.-predicted-2">Actual vs.&nbsp;Predicted</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><embed src="Expt3_Combined/gamlss/actual_vs_predicted.pdf" class="img-fluid"></p>
+<figcaption>Actual vs.&nbsp;predicted overlay</figcaption>
+</figure>
+</div>
+<p>Observed and predicted densities show strong overlap.</p>
+</section>
+<section id="density-comparison-2" class="level3">
+<h3 class="anchored" data-anchor-id="density-comparison-2">Density Comparison</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><embed src="Expt3_Combined/gamlss/density_comparison.pdf" class="img-fluid"></p>
+<figcaption>Density comparison</figcaption>
+</figure>
+</div>
+<p>The density comparison confirms appropriate fit.</p>
+</section>
+<section id="conditional-quantiles-2" class="level3">
+<h3 class="anchored" data-anchor-id="conditional-quantiles-2">Conditional Quantiles</h3>
+<p>Figure S2.3.7 Conditional quantiles by subgroup (Experiment 3)</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><embed src="Expt3_Combined/gamlss/conditional_quantiles_TEmotion.pdf" class="img-fluid"></p>
+<figcaption>Conditional quantiles by subgroup</figcaption>
+</figure>
+</div>
+<p>Consistent fit across subgroups supports the robustness of the model.</p>
+<hr>
+</section>
+</section>
+</section>
+<section id="summary-of-model-validation" class="level1">
+<h1>Summary of Model Validation</h1>
+<section id="racing-diffusion-models-1" class="level2">
+<h2 class="anchored" data-anchor-id="racing-diffusion-models-1">Racing Diffusion Models</h2>
+<p>Across all three experiments, the racing diffusion models demonstrated:</p>
+<ul>
+<li><strong>Successful convergence</strong>: All Rhat values &lt; 1.01, with good effective sample sizes</li>
+<li><strong>Good posterior properties</strong>: Smooth, unimodal distributions without boundary effects</li>
+<li><strong>Excellent fit to RT distributions</strong>: Predicted RTs closely matched observed data overall and by condition</li>
+<li><strong>Accurate accuracy recovery</strong>: Predicted accuracy aligned with observed performance</li>
+<li><strong>Meaningful individual differences</strong>: Random effect SDs indicated substantial participant variability</li>
+</ul>
+</section>
+<section id="ex-gaussian-models-1" class="level2">
+<h2 class="anchored" data-anchor-id="ex-gaussian-models-1">Ex-Gaussian Models</h2>
+<p>Across all three experiments, the ex-Gaussian models demonstrated:</p>
+<ul>
+<li><strong>Good quantile fit</strong>: Predicted quantiles closely matched observed quantiles across the distribution</li>
+<li><strong>Small prediction errors</strong>: Percent errors typically below 5%</li>
+<li><strong>Good density alignment</strong>: Observed and predicted densities showed strong overlap</li>
+<li><strong>Consistent fit across subgroups</strong>: Conditional quantile plots showed no systematic biases by condition</li>
+</ul>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>Both the racing diffusion models and ex-Gaussian models provide adequate fits to the data across all three experiments. The validation checks support the use of these models for drawing inferences about the effects of expression, face sex, face race, and participant characteristics on response time distributions and decision processes.</p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
